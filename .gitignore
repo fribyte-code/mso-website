@@ -1,0 +1,6 @@
+*.sqlite3
+.DS_Store
+desktop.ini
+.idea
+.vscode
+

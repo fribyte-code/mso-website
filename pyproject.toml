@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "mso-website"
+version = "0.1.0"
+description = ""
+authors = ["Johannes Skivdal <johannes@skivdaldata.no>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+wagtail = ">=6.2,<6.3"
+django = ">=4.2,<5.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
