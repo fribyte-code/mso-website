@@ -16,7 +16,7 @@ You also need Poetry, a Python package manager. Instructions for installation ar
 
 If you're inexperienced with Django or Python specific tooling, the easiest way of developing the project locally will be using PyCharm. This is due to its integrated features for Django, and automated management of the Poetry environment.
 
-PyCharm is available for free as a [community edition here](https://www.jetbrains.com/pycharm/download), if you scroll down the page a little bit.
+PyCharm is available for free, as long as you sign up for the [GitHub student developer pack](https://education.github.com/pack). It is important that you get this because we *need* PyCharm Professional edition, [available here](https://www.jetbrains.com/pycharm/download).
 
 ### Fork this repository on GitHub
 
