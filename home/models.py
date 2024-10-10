@@ -11,7 +11,7 @@ from wagtail.fields import RichTextField
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 
 
-class HomePage(Page):
+class DefaultPage(Page):
 
     # We use RichTextField for text fields
     # so that the client can format the text as they like.
