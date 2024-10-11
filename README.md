@@ -72,8 +72,20 @@ The project depends on a SQLite database. This is not yet initialized and is the
 
 The website should now be in working order on your computer. On running the website with the Play button in PyCharm (or command if not using PyCharm), you should no longer see an error message.
 
+### Creating new pages.
+
+New pages can be created by going to [localhost:8000/admin/](http://localhost:8000/admin/) -> Pages -> click on the pencil next to the title -> click on the triple dots on the top of the page -> Add child page.
+
+You can navigate to the page that you created by using the title of your page like this:  
+For example if we made a page with the title "testpage", navigate to [localhost:8000/testpage/](http://localhost:8000/testpage/) after you publish using the drop up menu at the bottom of the page.
+
+The child page contains a title and a hero section and body. The formatting of the text can be changed by clicking the green + button that hovers to the left of the textbox. 
+
+Build away!
+
 ## Acknowledgements
 
 Currently, this is under development by a group of `n` people at [friByte](https://fribyte.no):
 
 - Johannes Skivdal [@skivdal](https://github.com/skivdal)
+- Kai Waløen [@KWaloen](https://github.com/KWaloen)
