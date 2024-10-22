@@ -4,11 +4,51 @@
 {% block body_class %}template-homepage{% endblock %}
 
 {% block extra_css %}
+<style>
+
+        .navbar {
+            display: flex;
+            flex-direction: row;
+            background: blue;
+            height: auto;
+            padding: 1em;
+        }
+
+        .navbar-left {
+            color: white;
+            padding: 1em;
+        }
+
+        .navbar-center {
+            color: green;
+            padding: 1em;
+
+        }
+
+        .navbar-right {
+            color: red;
+            padding: 1em;
+
+        }
+</style>
+
 
 {% endblock extra_css %}
 
 {% block content %}
-    <div>
+
+    <div class="navbar">
+            <div class="navbar-left">LOGO</div>
+            <div class="navbar-center">Hjem</div>
+            <div class="navbar-center">Bestilling</div>
+            <div class="navbar-center">Styret</div>
+            <div class="navbar-center">Spor oss</div>
+            <div class="navbar-center">Aksjonsuke</div>
+            <div class="navbar-center">Evaluering</div>
+            <div class="navbar-right">sign in</div>
+            </div>
+
+    </div>
         <h1>{{ page.title }}</h1>
         <p>{{ page.hero_text|richtext }}</p>
     </div>
