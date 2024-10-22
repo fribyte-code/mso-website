@@ -17,7 +17,7 @@
         }
 
         .navbar {
-            font-size: 1em;
+            font-size: 1.2em;
             display: flex;
             flex-direction: row;
             background: #2F3E4E;
@@ -51,6 +51,21 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
+        .signInButton:hover {
+            background-color: white;
+        }
+
+        .link {
+            color: white;
+            text-decoration: none;
+        }
+
+        .link:hover {
+            color: #FFC107;
+        }
+
+
+
     </style>
 
 
@@ -61,13 +76,13 @@
     {% load static %}
 
     <div class="navbar">
-        <img src="{% static 'images/MSO_logo.png' %}" alt="MSO_logo.png" class="navbar-left" height=80px width=80px/>
-        <div class="navbar-center">Hjem</div>
-        <div class="navbar-center">Bestilling</div>
-        <div class="navbar-center">Styret</div>
-        <div class="navbar-center">Spor oss</div>
-        <div class="navbar-center">Aksjonsuke</div>
-        <div class="navbar-center">Evaluering</div>
+        <a href="/" class="navbar-left"><img src="{% static 'images/MSO_logo.png' %}" alt="MSO_logo.png" height=80px width=80px/></a>
+        <div class="navbar-center link"> <a href="/" class="link">Hjem</a> </div>
+        <div class="navbar-center"><a href="/" class="link">Bestilling</a></div>
+        <div class="navbar-center"><a href="/" class="link">Styret</a></div>
+        <div class="navbar-center"><a href="/" class="link">Spor oss</a></div>
+        <div class="navbar-center"><a href="/" class="link">Aksjonsuke</a></div>
+        <div class="navbar-center"><a href="/" class="link">Evaluering</a></div>
         <button type="signInButton" class="signInButton">sign in</button>
     </div>
 
