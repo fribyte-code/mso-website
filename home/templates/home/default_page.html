@@ -4,54 +4,77 @@
 {% block body_class %}template-homepage{% endblock %}
 
 {% block extra_css %}
-<style>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .textBox {
+            margin-left: 18em;
+            margin-right: 18em;
+            margin-top: 2em;
+            margin-bottom: 10em;
+        }
 
         .navbar {
+            font-size: 1em;
             display: flex;
             flex-direction: row;
-            background: blue;
+            background: #2F3E4E;
             height: auto;
-            padding: 1em;
+            justify-content: center;
         }
 
         .navbar-left {
             color: white;
             padding: 1em;
+            margin: auto;
         }
 
         .navbar-center {
-            color: green;
-            padding: 1em;
-
+            color: white;
+            margin: auto;
         }
 
-        .navbar-right {
-            color: red;
-            padding: 1em;
-
+        .signInButton {
+            margin: auto;
+            background-color: #FFC107;
+            color: #2F3E4E;
+            border: none;
+            width: 8em;
+            height: 2.5em;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            text-transform: lowercase;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-</style>
+
+    </style>
 
 
 {% endblock extra_css %}
 
 {% block content %}
 
-    <div class="navbar">
-            <div class="navbar-left">LOGO</div>
-            <div class="navbar-center">Hjem</div>
-            <div class="navbar-center">Bestilling</div>
-            <div class="navbar-center">Styret</div>
-            <div class="navbar-center">Spor oss</div>
-            <div class="navbar-center">Aksjonsuke</div>
-            <div class="navbar-center">Evaluering</div>
-            <div class="navbar-right">sign in</div>
-            </div>
+    {% load static %}
 
+    <div class="navbar">
+        <img src="{% static 'images/MSO_logo.png' %}" alt="MSO_logo.png" class="navbar-left" height=80px width=80px/>
+        <div class="navbar-center">Hjem</div>
+        <div class="navbar-center">Bestilling</div>
+        <div class="navbar-center">Styret</div>
+        <div class="navbar-center">Spor oss</div>
+        <div class="navbar-center">Aksjonsuke</div>
+        <div class="navbar-center">Evaluering</div>
+        <button type="signInButton" class="signInButton">sign in</button>
     </div>
+
+   <div class="textBox">
         <h1>{{ page.title }}</h1>
         <p>{{ page.hero_text|richtext }}</p>
-    </div>
 
-  {{ page.body|richtext }}
+    {{ page.body|richtext }}
+   </div>
 {% endblock content %}
