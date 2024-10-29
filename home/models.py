@@ -27,6 +27,3 @@ class DefaultPage(Page):
         ),
         FieldPanel('body'),
     ]
-
-def get_nav_pages(self):
-    return self.get_children().live().public()
