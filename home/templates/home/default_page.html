@@ -4,14 +4,92 @@
 {% block body_class %}template-homepage{% endblock %}
 
 {% block extra_css %}
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .textBox {
+            margin-left: 18em;
+            margin-right: 18em;
+            margin-top: 2em;
+            margin-bottom: 10em;
+        }
+
+        .navbar {
+            font-size: 1.2em;
+            display: flex;
+            flex-direction: row;
+            background: #2F3E4E;
+            height: auto;
+            justify-content: center;
+        }
+
+        .navbar-left {
+            color: white;
+            padding: 1em;
+            margin: auto;
+            filter: invert(100%);
+        }
+
+        .navbar-center {
+            color: white;
+            margin: auto;
+        }
+
+        .signInButton {
+            margin: auto;
+            background-color: #FFC107;
+            color: #2F3E4E;
+            border: none;
+            width: 8em;
+            height: 2.5em;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .signInButton:hover {
+            background-color: white;
+        }
+
+        .link {
+            color: white;
+            text-decoration: none;
+        }
+
+        .link:hover {
+            color: #FFC107;
+        }
+
+
+
+    </style>
+
 
 {% endblock extra_css %}
 
 {% block content %}
-    <div>
-        <h1>{{ page.title }}</h1>
-        <p>{{ page.hero_text|richtext }}</p>
+
+    {% load static %}
+
+    <div class="navbar">
+        <a href="/" class="navbar-left"><img src="{% static 'images/mso_logo.webp' %}" alt="MSO_logo.png" height=80px width=80px></a>
+        <div class="navbar-center link"> <a href="/" class="link">Hjem</a> </div>
+        <div class="navbar-center"><a href="/" class="link">Bestilling</a></div>
+        <div class="navbar-center"><a href="/" class="link">Styret</a></div>
+        <div class="navbar-center"><a href="/" class="link">Spor oss</a></div>
+        <div class="navbar-center"><a href="/" class="link">Aksjonsuke</a></div>
+        <div class="navbar-center"><a href="/" class="link">Evaluering</a></div>
+        <button type="signInButton" class="signInButton">Sign in</button>
     </div>
 
-  {{ page.body|richtext }}
+   <div class="textBox">
+        <h1>{{ page.title }}</h1>
+        <p>{{ page.hero_text|richtext }}</p>
+
+    {{ page.body|richtext }}
+   </div>
 {% endblock content %}

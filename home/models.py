@@ -4,6 +4,7 @@ from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 
 
 class DefaultPage(Page):
+
     # We use RichTextField for text fields
     # so that the client can format the text as they like.
 
