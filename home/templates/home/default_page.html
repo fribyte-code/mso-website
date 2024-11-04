@@ -5,7 +5,7 @@
 
 {% block extra_css %}
     <style>
-        body {
+        .template-homepage {
             margin: 0;
         }
 
@@ -64,6 +64,50 @@
             color: #FFC107;
         }
 
+        footer {
+            position: absolute;
+            display: flex;
+            bottom: 0;
+            left: 0;
+            flex-direction: column;
+            background-color: lightgrey;
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            height: 100px;
+            gap: 7px;
+
+        }
+        .bottom-text-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-end;
+            height: 50px
+        }
+
+        .bottom-text-row2 {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            height: 50px
+
+        }
+        
+        .bottom-text-row div:not(:last-child)::after {
+            content: " | ";  /* Adds space before and after the separator */
+            color: #888;     /* Optional: change color */
+            padding-right: 5px;
+        }
+        
+        .bottom-text-row2 div:not(:last-child)::after {
+            content: " - ";  /* Adds space before and after the separator */
+            color: #888;     /* Optional: change color */
+            padding-right: 5px;
+        }
+
+
 
 
     </style>
@@ -92,4 +136,19 @@
 
     {{ page.body|richtext }}
    </div>
+
+    <footer>
+        <div class="bottom-text-row">
+            <div>MSO Bergen</div>
+            <div>Bestilling</div>
+            <div>Spør oss</div>
+            <div>msopost@uib.no</div>
+        </div>
+        <div class="bottom-text-row2">
+            <div>Sett dine egne grenser</div>
+            <div>Respekter andres grenser</div>
+            <div>Ta vare på hverandre</div>
+        </div>
+    </footer>
+
 {% endblock content %}
