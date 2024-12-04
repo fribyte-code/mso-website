@@ -1,0 +1,138 @@
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    height: 100%;
+    font-family: barlow, sans-serif;
+}
+
+
+.template-homepage {
+            margin: 0;
+        }
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+    min-height: 100%;
+}
+
+
+.main-content {
+        margin-left: 18em;
+        margin-right: 18em;
+        margin-top: 2em;
+        margin-bottom: 10em;
+        flex-grow: 1;
+    }
+
+.navbar {
+    font-size: 1.2em;
+    display: flex;
+    flex-direction: row;
+    background: #2F3E4E;
+    height: auto;
+    justify-content: center;
+    flex-grow: 0;
+}
+
+.navbar-left {
+    color: white;
+    padding: 1em;
+    margin: auto;
+    filter: invert(100%);
+}
+
+section.main-content {
+    flex-grow: 1;
+}
+
+.navbar-center {
+    color: white;
+    margin: auto;
+}
+
+.signInButton {
+    margin: auto;
+    background-color: #FFC107;
+    color: #2F3E4E;
+    border: none;
+    width: 8em;
+    height: 2.5em;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.signInButton:hover {
+    background-color: white;
+}
+
+.link {
+    color: white;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: #FFC107;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(225,225,225);
+    width: 100%;
+    min-height: 20vh;
+    gap: 7px;
+    flex-grow: 0;
+
+}
+
+footer > div > div > a {
+    text-decoration: underline;
+    color: black;
+}
+
+.main-content > * > a {
+    text-decoration: underline;
+    color: black;
+}
+
+
+.bottom-text-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    height: 50px
+}
+
+.bottom-text-row2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    height: 50px;
+
+}
+
+.bottom-text-row div:not(:last-child)::after {
+    content: " | ";  /* Adds space before and after the separator */
+    color: #888;     /* Optional: change color */
+    padding-right: 5px;
+}
+
+.bottom-text-row2 div:not(:last-child)::after {
+    content: " - ";  /* Adds space before and after the separator */
+    color: #888;     /* Optional: change color */
+    padding-right: 5px;
+}
+
