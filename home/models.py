@@ -3,7 +3,7 @@ from wagtail.fields import RichTextField
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 
 
-class HjemPage(Page):
+class DefaultPage(Page):
 
     # We use RichTextField for text fields
     # so that the client can format the text as they like.
@@ -27,51 +27,3 @@ class HjemPage(Page):
         ),
         FieldPanel('body'),
     ]
-
-
-class BestillingPage(Page):
-    hero_text = RichTextField(
-        blank=True,
-        max_length=255, help_text="Write a title for the paragraph explaining how to order"
-    )
-
-    main_paragraph = RichTextField(blank=True, help_text="Write a paragraph explaining how to order")
-
-    content_panels = Page.content_panels + [
-        MultiFieldPanel(
-            [
-                FieldPanel("hero_text"),
-            ],
-            heading="Hero section",
-        ),
-        FieldPanel('main_paragraph'),
-    ]
-
-class StyretPage(Page):
-    main_paragraph = RichTextField(blank=True, help_text="Write a list over current members in the board")
-
-    content_panels = Page.content_panels + [
-        FieldPanel('main_paragraph'),
-    ]
-
-class SporossPage(Page):
-    main_paragraph = RichTextField(blank=True, help_text="Info til de som skal utfylle spørreskjemaet")
-
-    content_panels = Page.content_panels + [
-        FieldPanel('main_paragraph'),
-    ]
-
-class AksjonsukePage(Page):
-    main_paragraph = RichTextField(blank=True, help_text="Skriv den infoen du vil om aksjonsuken")
-
-    content_panels = Page.content_panels + [
-        FieldPanel('main_paragraph'),
-    ]
-
-class EvalueringPage(Page):
-    main_paragraph = RichTextField(blank=True, help_text="Skriv den infoen du vil om evalueringen")
-
-    content_panels = Page.content_panels + [
-        FieldPanel('main_paragraph'),
-    ]
-
