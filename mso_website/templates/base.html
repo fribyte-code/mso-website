@@ -26,6 +26,12 @@
         {# Global stylesheets #}
         <link rel="stylesheet" type="text/css" href="{% static 'css/mso_website.css' %}">
 
+        {# Different Fonts #}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+
         {% block extra_css %}
         {# Override this in templates to add extra stylesheets #}
         {% endblock %}
@@ -34,7 +40,33 @@
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
 
-        {% block content %}{% endblock %}
+        <div class="navbar">
+            <a href="/" class="navbar-left"><img src="{% static 'images/mso_logo.webp' %}" alt="MSO_logo.png" height=80px width=80px></a>
+            <div class="navbar-center link"> <a href="/" class="link">Hjem</a> </div>
+            <div class="navbar-center"><a href="http://localhost:8000/bestilling/" class="link">Bestilling</a></div>
+            <div class="navbar-center"><a href="http://localhost:8000/styret/" class="link">Styret</a></div>
+            <div class="navbar-center"><a href="http://localhost:8000/spoross/" class="link">Spor oss</a></div>
+            <div class="navbar-center"><a href="http://localhost:8000/aksjonsuke/" class="link">Aksjonsuke</a></div>
+            <div class="navbar-center"><a href="http://localhost:8000/evaluering/" class="link">Evaluering</a></div>
+            <button type="signInButton" class="signInButton">Sign in</button>
+        </div>
+        <section class="main-content">
+            {% block content %}{% endblock %}
+        </section>
+
+        <footer>
+            <div class="bottom-text-row">
+                <div>MSO Bergen</div>
+                <div><a href="/">Bestilling</a></div>
+                <div><a href="/">Spør oss</a></div>
+                <div><a href="/">msopost@uib.no</a></div>
+            </div>
+            <div class="bottom-text-row2">
+                <div>Sett dine egne grenser</div>
+                <div>Respekter andres grenser</div>
+                <div>Ta vare på hverandre</div>
+            </div>
+        </footer>
 
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/mso_website.js' %}"></script>

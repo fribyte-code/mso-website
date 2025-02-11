@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+
+{% block body_class %}template-bestilling_page{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href={% static "css/evaluering_page.css" %}>
+{% endblock extra_css %}
+
+{% block content %}
+   <div class="textBox">
+        <h1>{{ page.title }}</h1>
+        <p>{{ page.main_paragraph|richtext }}</p>
+
+    {{ page.body|richtext }}
+   </div>
+
+{% endblock content %}

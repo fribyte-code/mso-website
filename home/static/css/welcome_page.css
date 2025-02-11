@@ -16,6 +16,7 @@ body {
     color: #231f20;
     font-family: 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
     line-height: 1.25;
+    outline: 2px solid #e4e4e4;
 }
 
 a {
