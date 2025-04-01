@@ -51,7 +51,7 @@ Your fork can be private if you'd like it to. If you want quick help then having
 Clone your fork using your preferred solution. In the project directory:
 
 - Run `poetry install` to get dependencies
-- Run `poetry shell` to activate the virtual env
+- Run `poetry env activate` to activate the virtual env
 - Run `python manage.py runserver` to start the application
 - Visit [localhost:8000](http://localhost:8000). This is the website running on your computer.
 - Here, you should expect an 'OperationalError at /'. We will fix this in the next step.
