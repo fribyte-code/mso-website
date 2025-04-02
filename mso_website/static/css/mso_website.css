@@ -1,13 +1,7 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
 html {
     font-size: 62.5%;
     height: 100%;
-    font-family: barlow, sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 
@@ -24,10 +18,7 @@ body {
 
 
 .main-content {
-    margin-left: 18em;
-    margin-right: 18em;
-    margin-top: 2em;
-    margin-bottom: 10em;
+    margin: 2em 18em 10em;
     flex-grow: 1;
 }
 
@@ -36,15 +27,15 @@ body {
     display: flex;
     flex-direction: row;
     background: #2F3E4E;
-    height: auto;
+    height: 8vh;
     justify-content: center;
+    align-items: center;
     flex-grow: 0;
 }
 
 .navbar-left {
     color: white;
-    padding: 1em;
-    margin: auto;
+    margin-left: 20px;
     filter: invert(100%);
 }
 
@@ -58,7 +49,7 @@ section.main-content {
 }
 
 .signInButton {
-    margin: auto;
+    margin-right: 20px;
     background-color: #FFC107;
     color: #2F3E4E;
     border: none;
@@ -89,7 +80,7 @@ footer {
     flex-direction: column;
     background-color: rgb(225, 225, 225);
     width: 100%;
-    min-height: 20vh;
+    min-height: 10vh;
     gap: 7px;
     flex-grow: 0;
 
@@ -137,4 +128,8 @@ footer>div>div>a {
     color: #888;
     /* Optional: change color */
     padding-right: 5px;
+}
+
+a{
+    color:#FFC107;
 }
