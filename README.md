@@ -89,3 +89,4 @@ Currently, this is under development by a group of `n` people at [friByte](https
 
 - Johannes Skivdal [@skivdal](https://github.com/skivdal)
 - Kai Waløen [@KWaloen](https://github.com/KWaloen)
+- Sigvard Helsingen [@SigvardHelsingen](https://github.com/SigvardHelsingen)
