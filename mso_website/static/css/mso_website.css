@@ -133,3 +133,56 @@ footer>div>div>a {
 a{
     color:#FFC107;
 }
+
+.homepage-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0.5rem;
+}
+
+.homepage-container h1 {
+    margin-bottom: 1rem;
+    color: #222;
+}
+
+.homepage-container .intro {
+    margin-bottom: 2rem;
+}
+
+.homepage-container form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.homepage-container form p {
+    display: flex;
+    flex-direction: column;
+}
+
+.homepage-container label {
+    font-weight: bold;
+}
+
+.homepage-container textarea,
+.homepage-container input[type="text"],
+.homepage-container input[type="date"],
+.homepage-container input[type="submit"] {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.homepage-container input[type="submit"] {
+    width: fit-content;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.homepage-container input[type="submit"]:hover {
+    background-color: #0056b3;
+}
