@@ -55,3 +55,11 @@ class FormPage(AbstractEmailForm):
         ], "Email"),
     ]
 
+    def process_form_submission(self, form):
+        
+        ### Insert email sending logic here ###
+
+        return self.get_submission_class().objects.create(
+            form_data=form.cleaned_data,
+            page=self, 
+        )
