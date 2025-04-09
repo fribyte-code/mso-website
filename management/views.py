@@ -1,9 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.shortcuts import render
 
 
-
-@login_required(redirect_field_name="my_redirect_field")
+@login_required(redirect_field_name="my_redirect_field", login_url="/admin/login/")
 def index(request):
-    return HttpResponse("Hello, world. You're at the management index.")
+    return render(request, "management.html")
 
