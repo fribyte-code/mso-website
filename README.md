@@ -70,6 +70,33 @@ The project depends on a SQLite database. This is not yet initialized and is the
   - Type a password, click enter. Type the same password again and click enter.
     - It may yell at you if the password is not sufficiently complex. You can type `y` and override this protection. This login only applies to your local version of the website.
 
+### Seeing the communal changes
+
+When you run locally, you will only see locally made changes. Unless you have made changes, you will have empty pages (dont panic, that is expected).
+For ease of development, we have a postgres database where changes made by others working on this project are stored (we call these communcal changes).
+
+How to see communcal changes:
+1. Connect to friByte tailscale (refer to friByte wiki) 
+
+2. Create a .env file in the project root if you do not have one already. Paste this:
+
+```
+#sqlite for local content, use postgres for communal content
+USE_DB_TYPE=sqlite
+
+POSTGRES_HOST=100.64.0.68
+POSTGRES_PORT=5432
+POSTGRES_USER=mso_dev_user
+POSTGRES_PASS=password123
+POSTGRES_DB=mso_dev
+```
+
+3. Change the USE_DB_TYPE value to postgres 
+4. Run `python manage.py migrate` if necessary 
+5. Run the server with `python manage.py runserver` to see the communal changes
+
+When developing, it is recommended to use sqlite (change the value of USE_DB_TYPE to sqlite). When you are done change to postgres, migrate if necessary, and run the server to see your changes among the communal changes. 
+
 ### Profit.
 
 The website should now be in working order on your computer. On running the website with the Play button in PyCharm (or command if not using PyCharm), you should no longer see an error message.
