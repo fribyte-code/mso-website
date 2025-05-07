@@ -63,8 +63,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "mso_website.urls"
 
-WAGTAIL_FRONTEND_LOGIN_TEMPLATE = 'management/login.html'
-
 LOGIN_REDIRECT_URL = '/management/'
 
 TEMPLATES = [
