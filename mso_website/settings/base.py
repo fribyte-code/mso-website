@@ -63,9 +63,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "mso_website.urls"
 
-# URL to hit when a private page needs login
-WAGTAIL_FRONTEND_LOGIN_URL = '/management/login/'
-# Template to render for that view
 WAGTAIL_FRONTEND_LOGIN_TEMPLATE = 'management/login.html'
 
 LOGIN_REDIRECT_URL = '/management/'
