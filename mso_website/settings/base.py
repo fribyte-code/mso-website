@@ -63,6 +63,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "mso_website.urls"
 
+LOGIN_REDIRECT_URL = '/management/'
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",

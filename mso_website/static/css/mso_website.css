@@ -2,11 +2,8 @@ html {
     font-size: 62.5%;
     height: 100%;
     font-family: Arial, sans-serif;
-}
-
-
-.template-homepage {
     margin: 0;
+    padding: 0;
 }
 
 body {
@@ -14,6 +11,8 @@ body {
     flex-direction: column;
     font-size: 1.5rem;
     min-height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 

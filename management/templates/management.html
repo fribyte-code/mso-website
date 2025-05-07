@@ -1,3 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
+</html>
+{% load static wagtailcore_tags wagtailuserbar %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            {% block title %}
+                {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% wagtail_site as current_site %}
+                {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
+            {% endblock %}
+        </title>
+        {% if page.search_description %}
+        <meta name="description" content="{{ page.search_description }}" />
+        {% endif %}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {# Force all links in the live preview panel to be opened in a new tab #}
+        {% if request.in_preview_panel %}
+        <base target="_blank">
+        {% endif %}
+
+        {# Global stylesheets #}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/mso_website.css' %}">
+
+        {# Different Fonts #}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+
+        {% block extra_css %}
+        {# Override this in templates to add extra stylesheets #}
+        {% endblock %}
+    </head>
+
+    <body class="{% block body_class %}{% endblock %}">
+        {% wagtailuserbar %}
+
+        <div class="navbar">
+            <a href="/" class="navbar-left"><img src="{% static 'images/mso_logo.webp' %}" alt="MSO_logo.png" height="60px" width="60px"></a>
+            <div class="navbar-center"><a href="/admin" class="link">Admin</a></div>
+            <div class="navbar-center"><a href="/Bruker" class="link">Bruker</a></div>
+            <button type="signInButton" class="signInButton" onclick=window.location.href='{% url 'wagtailadmin_logout' %}'>Sign out</button>
+        </div>
+        <section class="main-content">
+            {% block content %}
+            
+            <h1>Management</h1>
+            
+            {% endblock %}
+        </section>
+
+        <footer>
+            <div class="bottom-text-row">
+                <div>MSO Bergen</div>
+                <div><a href="/bestilling">Bestilling</a></div>
+                <div><a href="/spoross">Spør oss</a></div>
+                <div><a href="mailto:msopost@uib.no">msopost@uib.no</a></div>
+            </div>
+            <div class="bottom-text-row2">
+                <div>Sett dine egne grenser</div>
+                <div>Respekter andres grenser</div>
+                <div>Ta vare på hverandre</div>
+            </div>
+        </footer>
+
+        {# Global javascript #}
+        <script type="text/javascript" src="{% static 'js/mso_website.js' %}"></script>
+
+        {% block extra_js %}
+        {# Override this in templates to add extra javascript #}
+        {% endblock %}
+    </body>
 </html>
