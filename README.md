@@ -92,8 +92,8 @@ POSTGRES_DB=mso_dev
 ```
 
 3. Change the USE_DB_TYPE value to postgres 
-4. Run `python manage.py migrate` if necessary 
-5. Run the server with `python manage.py runserver` to see the communal changes
+
+4. Run the server with `python manage.py runserver` to see the communal changes
 
 When developing, it is recommended to use sqlite (change the value of USE_DB_TYPE to sqlite). When you are done change to postgres, migrate if necessary, and run the server to see your changes among the communal changes. 
 
