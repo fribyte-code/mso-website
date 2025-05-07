@@ -68,7 +68,7 @@ WAGTAIL_FRONTEND_LOGIN_URL = '/management/login/'
 # Template to render for that view
 WAGTAIL_FRONTEND_LOGIN_TEMPLATE = 'management/login.html'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/management/'
 
 TEMPLATES = [
     {
