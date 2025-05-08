@@ -35,6 +35,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
+        
 
         {% block extra_css %}
         {# Override this in templates to add extra stylesheets #}
@@ -54,9 +55,34 @@
         </div>
         <section class="main-content">
             <div>
-                <h1>
-                    JOBS PAGE
-                </h1>
+                <h1>Submitted Jobs</h1>
+                
+                {% if form_submissions %}
+                    <table class="jobs-table">
+                        <thead>
+                            <tr>
+                                <th>Submission Date</th>
+                                <th>Form Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for submission in form_submissions %}
+                                <tr>
+                                    <td>{{ submission.submit_time|date:"F j, Y, g:i a" }}</td>
+                                    <td>
+                                        {% for field, value in submission.form_data.items %}
+                                            <strong>{{ field }}:</strong> {{ value }}<br>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="no-jobs">
+                        <p>No job submissions found.</p>
+                    </div>
+                {% endif %}
             </div>
         </section>
 
