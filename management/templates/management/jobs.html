@@ -35,7 +35,11 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-        
+        <style>
+            .jobs-table {
+                
+            }
+        </style>
 
         {% block extra_css %}
         {# Override this in templates to add extra stylesheets #}
@@ -62,21 +66,54 @@
                         <thead>
                             <tr>
                                 <th>Submission Date</th>
-                                <th>Form Data</th>
+                                <th>Navn på skole/organisasjon</th>
+                                <th>Kontaktperson</th>
+                                <th>Telefon</th>
+                                <th>E-post</th>
+                                <th>Dato</th>
+                                <th>Start tid</th>
+                                <th>Slutt tid</th>
+                                <th>Gruppe type</th>
+                                <th>Antall grupper</th>
+                                <th>Gruppestørrelser</th>
+                                <th>Kjønnsfordeling</th>
+                                <th>Alder/Klassetrinn</th>
+                                <th>Har MSO undervist her før?</th>
+                                <th>Tilleggsinformasjon</th>
+                                <th>Besøksadresse</th>
+                                <th>Navn på fakturamottaker</th>
+                                <th>Fakturaadresse</th>
+                                <th>Organisasjonsnummer til fakturamottaker	</th>
+                                <th>Referanse</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
                             {% for submission in form_submissions %}
-                                <tr>
-                                    <td>{{ submission.submit_time|date:"F j, Y, g:i a" }}</td>
-                                    <td>
-                                        {% for field, value in submission.form_data.items %}
-                                            <strong>{{ field }}:</strong> {{ value }}<br>
-                                        {% endfor %}
-                                    </td>
-                                </tr>
+                              <tr>
+                                <td>{{ submission.submit_time|date:"F j, Y, g:i a" }}</td>
+                                <td>{{ submission.form_data.navn_pa_skoleorganisasjon }}</td>
+                                <td>{{ submission.form_data.kontaktperson }}</td>
+                                <td>{{ submission.form_data.telefon }}</td>
+                                <td>{{ submission.form_data.epost }}</td>
+                                <td>{{ submission.form_data.dato }}</td>
+                                <td>{{ submission.form_data.start_tid }}</td>
+                                <td>{{ submission.form_data.slutt_tid }}</td>
+                                <td>{{ submission.form_data.gruppe_type }}</td>
+                                <td>{{ submission.form_data.antall_grupper }}</td>
+                                <td>{{ submission.form_data.gruppestxf8rrelser }}</td>
+                                <td>{{ submission.form_data.kjxf8nnsfordeling }}</td>
+                                <td>{{ submission.form_data.alderklassetrinn }}</td>
+                                <td>{{ submission.form_data.har_mso_undervist_her_fxf8r }}</td>
+                                <td>{{ submission.form_data.tilleggsinformasjon }}</td>
+                                <td>{{ submission.form_data.besxf8ksadresse_gjerne_med_veibeskrivelse_fra_bergen_sentrum }}</td>
+                                <td>{{ submission.form_data.navn_pa_fakturamottaker }}</td>
+                                <td>{{ submission.form_data.fakturaadresse }}</td>
+                                <td>{{ submission.form_data.organisasjonsnummer_til_fakturamottaker }}</td>
+                                <td>{{ submission.form_data.referanse_feks_ressursnr_om_faktura_skal_til_fylkekommune }}</td>                                
+                              </tr>
                             {% endfor %}
-                        </tbody>
+                          </tbody>
                     </table>
                 {% else %}
                     <div class="no-jobs">
