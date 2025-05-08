@@ -13,7 +13,9 @@ def logout_view(request):
 
 @login_required(redirect_field_name="next", login_url="/management/login/")
 def profile(request):
-    return render(request, "management/profile.html")
+    return render(request, "management/profile.html", {
+        "user": request.user,
+    })
 
 @login_required(redirect_field_name="next", login_url="/management/login/")
 def jobs(request):

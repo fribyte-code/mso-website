@@ -54,9 +54,12 @@
         </div>
         <section class="main-content">
             <div>
-                <h1>
-                    USER PROFILE PAGE
-                </h1>
+                    {% block content %}
+                        <h1>USER PROFILE PAGE</h1>
+                        <p><strong>Username:</strong> {{ user.username }}</p>
+                        <p><strong>Fullname:</strong> {{ user.get_full_name }}</p>
+                        <p><strong>Email:</strong> {{ user.email }}</p>
+                    {% endblock %}
             </div>
         </section>
 
