@@ -1,5 +1,6 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
+from management.views import *
 
 from . import views
 
@@ -11,4 +12,5 @@ urlpatterns = [
         name="wagtail_login"
     ),
     path("logout/", views.logout_view, name="wagtailadmin_logout"),
+    path("profile/", views.profile, name="profile.html"),
 ]
