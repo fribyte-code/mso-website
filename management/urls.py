@@ -13,4 +13,5 @@ urlpatterns = [
     ),
     path("logout/", views.logout_view, name="wagtailadmin_logout"),
     path("profile/", views.profile, name="profile.html"),
+    path("jobs/", views.jobs, name="jobs.html"),
 ]
