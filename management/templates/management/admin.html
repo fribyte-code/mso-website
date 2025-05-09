@@ -5,7 +5,52 @@
 
 {% block extra_css %}
     <style>
-      
+        /* Wrap your table in a container that can scroll */
+        .table-wrapper {
+          width: 100%;              /* fill available width */
+          overflow-x: auto;         /* enable horizontal scroll if needed */
+          margin-bottom: 1.5rem;    /* give some breathing room below */
+        }
+
+        /* Make the table take up at most the container width */
+        .jobs-table {
+          width: 100%;
+          max-width: 100%;
+          border-collapse: collapse;
+          table-layout: auto;       /* allows columns to size to their content */
+          font-family: 'Barlow', sans-serif;
+          font-size: 1.4rem;
+        }
+
+        /* Header styling */
+        .jobs-table thead tr {
+          background-color: #f5f5f5;
+        }
+        .jobs-table th {
+          position: sticky;
+          top: 0;                   /* keep headers visible on scroll */
+          z-index: 1;
+          padding: 0.75rem 1rem;
+          border-bottom: 2px solid #ccc;
+          text-align: left;
+        }
+
+        /* Body cell styling */
+        .jobs-table td {
+          padding: 0.6rem 1rem;
+          border-bottom: 1px solid #ececec;
+          white-space: nowrap;      /* prevent wrapping inside cells */
+        }
+
+        /* Zebra striping for readability */
+        .jobs-table tbody tr:nth-child(odd) {
+          background-color: #fafafa;
+        }
+
+        /* Optional: hover highlight */
+        .jobs-table tbody tr:hover {
+          background-color: #eef6fb;
+        }  
     </style>
 {% endblock extra_css %}
 
@@ -17,4 +62,57 @@
         </button>
     </form>
 
+   
+
+    <div>
+        <h1>Submitted Jobs</h1>
+        
+        {% if users %}
+            <div class="table-wrapper">
+                <table class="jobs-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Fullname</th>
+                            <th>Email</th>
+                            <th>Telefon</th>
+                            <th>Kjønn</th>
+                            <th>Kull</th>
+                            <th>Erfaren</th>
+                            <th>PU Erfaren</th>
+                            <th>FUS Erfaren</th>
+                            <th>Over 72t</th>
+                            <th>Internundervisning</th>
+                            <th>Styremedlem</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                          <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.get_full_name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.profile.telefon }}</td>
+                            <td>{{ user.profile.kjønn }}</td>
+                            <td>{{ user.profile.kull }}</td>
+                            <td>{{ user.profile.erfaren|yesno:"✓,-" }}</td>
+                            <td>{{ user.profile.pu_erfaren|yesno:"✓,-" }}</td>
+                            <td>{{ user.profile.fus_erfaren|yesno:"✓,-" }}</td>
+                            <td>{{ user.profile.over_72h|yesno:"⭐,-" }}</td>
+                            <td>{{ user.profile.internundervisning|yesno:"✓,-" }}</td>
+                            <td>{{ user.profile.styremedlem|yesno:"✓,-" }}</td>
+                                                       
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="no-jobs">
+                <p>No job submissions found.</p>
+            </div>
+        {% endif %}
+    </div>
+    
 {% endblock %}

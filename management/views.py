@@ -55,6 +55,10 @@ def jobs(request):
 
 @staff_member_required(redirect_field_name="next", login_url="/management/login/")
 def admin(request):
-    return render(request, "management/admin.html")
+    users = User.objects.select_related('profile').all()
+    
+    return render(request, "management/admin.html", {
+        'users': users,
+    })
 
 
