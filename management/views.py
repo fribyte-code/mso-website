@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 from wagtail.contrib.forms.models import FormSubmission
 from home.models import FormPage
 from .models import Profile
-from .forms import ProfileForm
+from .forms import ProfileForm, AdminProfileForm
 from django.contrib.auth.models import User
 from django.contrib import messages 
 
@@ -59,6 +59,26 @@ def admin(request):
     
     return render(request, "management/admin.html", {
         'users': users,
+    })
+
+@staff_member_required(redirect_field_name="next", login_url="/management/login/")
+def admin_profile_edit(request, pk):
+    user    = get_object_or_404(User, pk=pk)
+    profile = user.profile
+
+    # pick the “admin” version of the form if you made 2 forms
+    form = AdminProfileForm(request.POST or None,
+                            request.FILES or None,
+                            instance=profile)
+
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect('admin-profile-edit', pk=pk)
+
+    return render(request, 'management/admin/profile_edit.html', {
+        'form':   form,
+        'user':   user,
+        'profile': profile,
     })
 
 
