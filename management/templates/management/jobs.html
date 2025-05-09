@@ -1,8 +1,6 @@
 {% extends "management-base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
 
-{% block body_class %}template-homepage{% endblock %}
-
 {% block extra_css %}
     <style>
         /* Wrap your table in a container that can scroll */
@@ -60,7 +58,14 @@
         
         {% if form_submissions %}
             <div class="table-wrapper">
-                <table class="jobs-table">
+                <table class="jobs-table sortable">
+                 
+                    <input
+                        type="text"
+                        id="user-filter"
+                        placeholder="🔍 Search jobs…"
+                        style="margin-bottom:1rem; padding:0.5rem; width:100%; max-width:400px;"
+                    >
                     <thead>
                         <tr>
                             <th>Submission Date</th>
@@ -119,4 +124,18 @@
             </div>
         {% endif %}
     </div>
+
+    <script>
+      document
+        .getElementById('user-filter')
+        .addEventListener('keyup', function() {
+          const term = this.value.trim().toLowerCase();
+          document
+            .querySelectorAll('.jobs-table tbody tr')
+            .forEach(row => {
+              row.style.display =
+                row.textContent.toLowerCase().includes(term) ? '' : 'none';
+            });
+        });
+    </script>
 {% endblock %}

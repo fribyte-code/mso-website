@@ -1,8 +1,6 @@
 {% extends "management-base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
 
-{% block body_class %}template-homepage{% endblock %}
-
 {% block extra_css %}
     <style>
         /* Wrap your table in a container that can scroll */
@@ -69,7 +67,14 @@
         
         {% if users %}
             <div class="table-wrapper">
-                <table class="jobs-table">
+                <input
+                        type="text"
+                        id="user-filter"
+                        placeholder="🔍 Search users…"
+                        style="margin-bottom:1rem; padding:0.5rem; width:100%; max-width:400px;"
+                    >
+                <table class="jobs-table sortable">
+                    
                     <thead>
                         <tr>
                             <th>Username</th>
@@ -85,7 +90,6 @@
                             <th>Timer</th>
                             <th>Internundervisning</th>
                             <th>Styremedlem</th>
-                            
                         </tr>
                     </thead>
                     <tbody>
@@ -97,14 +101,21 @@
                             <td>{{ user.profile.telefon }}</td>
                             <td>{{ user.profile.kjønn }}</td>
                             <td>{{ user.profile.kull }}</td>
-                            <td>{{ user.profile.erfaren|yesno:"✓,-" }}</td>
-                            <td>{{ user.profile.pu_erfaren|yesno:"✓,-" }}</td>
-                            <td>{{ user.profile.fus_erfaren|yesno:"✓,-" }}</td>
-                            <td>{{ user.profile.over_72h|yesno:"⭐,-" }}</td>
+                            <td>{{ user.profile.erfaren|yesno:"✓," }}</td>
+                            <td>{{ user.profile.pu_erfaren|yesno:"✓," }}</td>
+                            <td>{{ user.profile.fus_erfaren|yesno:"✓," }}</td>
+                            <td>
+                              {% if user.profile.timer >= 72 %}
+                                ⭐
+                                <span class="filter-alias" style="display:none;">over72</span>
+                              {% else %}
+                                  
+                                <span class="filter-alias" style="display:none;">no_over72</span>
+                              {% endif %}
+                            </td>
                             <td>{{ user.profile.timer }}</td>
-                            <td>{{ user.profile.internundervisning|yesno:"✓,-" }}</td>
-                            <td>{{ user.profile.styremedlem|yesno:"✓,-" }}</td>
-                                                       
+                            <td>{{ user.profile.internundervisning|yesno:"✓," }}</td>
+                            <td>{{ user.profile.styremedlem|yesno:"✓," }}</td>                 
                           </tr>
                         {% endfor %}
                       </tbody>
@@ -117,4 +128,17 @@
         {% endif %}
     </div>
     
+    <script>
+      document
+        .getElementById('user-filter')
+        .addEventListener('keyup', function() {
+          const term = this.value.trim().toLowerCase();
+          document
+            .querySelectorAll('.jobs-table tbody tr')
+            .forEach(row => {
+              row.style.display =
+                row.textContent.toLowerCase().includes(term) ? '' : 'none';
+            });
+        });
+    </script>
 {% endblock %}

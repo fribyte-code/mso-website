@@ -28,9 +28,10 @@ class Profile(models.Model):
     erfaren = models.BooleanField(default=False)
     pu_erfaren = models.BooleanField(default=False)
     fus_erfaren = models.BooleanField(default=False)
-    over_72h = models.BooleanField(default=False)
     timer = models.IntegerField(default=0)
     internundervisning = models.BooleanField(default=False)
     styremedlem = models.BooleanField(default=False)
+
+
 
     
