@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from wagtail.contrib.forms.models import FormSubmission
@@ -52,7 +53,7 @@ def jobs(request):
         "form_submissions": form_submissions
     })
 
-@login_required(redirect_field_name="next", login_url="/management/login/")
+@staff_member_required(redirect_field_name="next", login_url="/management/login/")
 def admin(request):
     return render(request, "management/admin.html")
 
