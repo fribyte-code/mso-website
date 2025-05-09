@@ -1,0 +1,20 @@
+{% extends "management-base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+    <style>
+      
+    </style>
+{% endblock extra_css %}
+
+{% block content %}
+
+    <form action="/admin/" method="get" style="display:inline;">
+        <button type="submit" class="profile-button">
+            Go to Admin Panel
+        </button>
+    </form>
+
+{% endblock %}

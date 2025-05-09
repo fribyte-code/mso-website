@@ -52,5 +52,8 @@ def jobs(request):
         "form_submissions": form_submissions
     })
 
+@login_required(redirect_field_name="next", login_url="/management/login/")
+def admin(request):
+    return render(request, "management/admin.html")
 
 

@@ -1,29 +1,9 @@
-{% load static wagtailcore_tags wagtailuserbar %}
+{% extends "management-base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title>
-        {% block title %}Edit Profile{% endblock %}
-        {% block title_suffix %}
-            {% wagtail_site as current_site %}
-            {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
-        {% endblock %}
-    </title>
-    {% if page.search_description %}
-    <meta name="description" content="{{ page.search_description }}" />
-    {% endif %}
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+{% block body_class %}template-homepage{% endblock %}
 
-    {% if request.in_preview_panel %}
-    <base target="_blank">
-    {% endif %}
-
-    {# Global stylesheet #}
-    <link rel="stylesheet" href="{% static 'css/mso_website.css' %}">
-
-    {% block extra_css %}
+{% block extra_css %}
     <style>
       /* Make all text inputs and textareas red */
       textarea{
@@ -31,54 +11,25 @@
       }
       
     </style>
-    {% endblock %}
-</head>
-<body class="{% block body_class %}{% endblock %}">
-    {% wagtailuserbar %}
+{% endblock extra_css %}
 
-    <div class="navbar">
-        <a href="/" class="navbar-left">
-            <img src="{% static 'images/mso_logo.webp' %}" alt="MSO logo" height="60" width="60">
-        </a>
-        <div class="navbar-center"><a href="/management" class="link">Management</a></div>
-        <div class="navbar-center"><a href="/management/profile" class="link">User Profile</a></div>
-        <div class="navbar-center"><a href="/management/jobs" class="link">Jobs</a></div>
-        <div class="navbar-center"><a href="/admin" class="link">Admin Panel</a></div>
-        <button type="button" class="signInButton"
-                onclick="window.location.href='{% url 'wagtailadmin_logout' %}'">
-            Sign out
-        </button>
-    </div>
+{% block content %}
+    <h1>Edit your profile</h1>
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="textbox">{{ msg }}</div>
+            {% endfor %}
+        {% endif %}
 
-    <section class="main-content">
-        <div>
-            {% block content %}
-                <h1>Edit your profile</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn">Save changes</button>
+        </form>
 
-                {% if messages %}
-                  {% for msg in messages %}
-                    <div class="textbox">{{ msg }}</div>
-                  {% endfor %}
-                {% endif %}
-
-                <form method="post" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  {{ form.as_p }}
-                  <button type="submit" class="btn">Save changes</button>
-                </form>
-
-                <form action="{% url 'profile.html' %}" method="get" style="display:inline;">
-                    <button type="submit" class="profile-button">
-                        Return to profile
-                    </button>
-                </form>
-            {% endblock %}
-        </div>
-    </section>
-
-    <footer></footer>
-
-    <script src="{% static 'js/mso_website.js' %}"></script>
-    {% block extra_js %}{% endblock %}
-</body>
-</html>
+        <form action="{% url 'profile.html' %}" method="get" style="display:inline;">
+            <button type="submit" class="profile-button">
+                Return to profile
+            </button>
+        </form>
+{% endblock %}

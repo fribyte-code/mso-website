@@ -1,133 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "management-base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
-</html>
-{% load static wagtailcore_tags wagtailuserbar %}
+{% block body_class %}template-homepage{% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>
-            {% block title %}
-                {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
-            {% endblock %}
-            {% block title_suffix %}
-                {% wagtail_site as current_site %}
-                {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
-            {% endblock %}
-        </title>
-        {% if page.search_description %}
-        <meta name="description" content="{{ page.search_description }}" />
-        {% endif %}
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+{% block extra_css %}
+    <style>
+        /* Wrap your table in a container that can scroll */
+        .table-wrapper {
+          width: 100%;              /* fill available width */
+          overflow-x: auto;         /* enable horizontal scroll if needed */
+          margin-bottom: 1.5rem;    /* give some breathing room below */
+        }
 
-        {# Force all links in the live preview panel to be opened in a new tab #}
-        {% if request.in_preview_panel %}
-        <base target="_blank">
-        {% endif %}
+        /* Make the table take up at most the container width */
+        .jobs-table {
+          width: 100%;
+          max-width: 100%;
+          border-collapse: collapse;
+          table-layout: auto;       /* allows columns to size to their content */
+          font-family: 'Barlow', sans-serif;
+          font-size: 1.4rem;
+        }
 
-        {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/mso_website.css' %}">
+        /* Header styling */
+        .jobs-table thead tr {
+          background-color: #f5f5f5;
+        }
+        .jobs-table th {
+          position: sticky;
+          top: 0;                   /* keep headers visible on scroll */
+          z-index: 1;
+          padding: 0.75rem 1rem;
+          border-bottom: 2px solid #ccc;
+          text-align: left;
+        }
 
-        {# Different Fonts #}
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        /* Body cell styling */
+        .jobs-table td {
+          padding: 0.6rem 1rem;
+          border-bottom: 1px solid #ececec;
+          white-space: nowrap;      /* prevent wrapping inside cells */
+        }
 
+        /* Zebra striping for readability */
+        .jobs-table tbody tr:nth-child(odd) {
+          background-color: #fafafa;
+        }
+
+        /* Optional: hover highlight */
+        .jobs-table tbody tr:hover {
+          background-color: #eef6fb;
+        }  
+    </style>
+{% endblock extra_css %}
+
+{% block content %}
+    <div>
+        <h1>Submitted Jobs</h1>
         
-
-        {% block extra_css %}
-        {# Override this in templates to add extra stylesheets #}
-        {% endblock %}
-    </head>
-
-    <body class="{% block body_class %}{% endblock %}">
-        {% wagtailuserbar %}
-
-        <div class="navbar">
-            <a href="/" class="navbar-left"><img src="{% static 'images/mso_logo.webp' %}" alt="MSO_logo.png" height="60px" width="60px"></a>
-            <div class="navbar-center"><a href="/management" class="link">Management</a></div>
-            <div class="navbar-center"><a href="/management/profile" class="link">User Profile</a></div>
-            <div class="navbar-center"><a href="/management/jobs" class="link">Jobs</a></div>
-            <div class="navbar-center"><a href="/admin" class="link">Admin Panel</a></div>
-            <button type="signInButton" class="signInButton" onclick=window.location.href='{% url 'wagtailadmin_logout' %}'>Sign out</button>
-        </div>
-        <section class="main-content">
-            <div>
-                <h1>Submitted Jobs</h1>
-                
-                {% if form_submissions %}
-                    <table class="jobs-table">
-                        <thead>
-                            <tr>
-                                <th>Submission Date</th>
-                                <th>Navn på skole/organisasjon</th>
-                                <th>Kontaktperson</th>
-                                <th>Telefon</th>
-                                <th>E-post</th>
-                                <th>Dato</th>
-                                <th>Start tid</th>
-                                <th>Slutt tid</th>
-                                <th>Gruppe type</th>
-                                <th>Antall grupper</th>
-                                <th>Gruppestørrelser</th>
-                                <th>Kjønnsfordeling</th>
-                                <th>Alder/Klassetrinn</th>
-                                <th>Har MSO undervist her før?</th>
-                                <th>Tilleggsinformasjon</th>
-                                <th>Besøksadresse</th>
-                                <th>Navn på fakturamottaker</th>
-                                <th>Fakturaadresse</th>
-                                <th>Organisasjonsnummer til fakturamottaker	</th>
-                                <th>Referanse</th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for submission in form_submissions %}
-                              <tr>
-                                <td>{{ submission.submit_time|date:"F j, Y, g:i a" }}</td>
-                                <td>{{ submission.form_data.navn_pa_skoleorganisasjon }}</td>
-                                <td>{{ submission.form_data.kontaktperson }}</td>
-                                <td>{{ submission.form_data.telefon }}</td>
-                                <td>{{ submission.form_data.epost }}</td>
-                                <td>{{ submission.form_data.dato }}</td>
-                                <td>{{ submission.form_data.start_tid }}</td>
-                                <td>{{ submission.form_data.slutt_tid }}</td>
-                                <td>{{ submission.form_data.gruppe_type }}</td>
-                                <td>{{ submission.form_data.antall_grupper }}</td>
-                                <td>{{ submission.form_data.gruppestxf8rrelser }}</td>
-                                <td>{{ submission.form_data.kjxf8nnsfordeling }}</td>
-                                <td>{{ submission.form_data.alderklassetrinn }}</td>
-                                <td>{{ submission.form_data.har_mso_undervist_her_fxf8r }}</td>
-                                <td>{{ submission.form_data.tilleggsinformasjon }}</td>
-                                <td>{{ submission.form_data.besxf8ksadresse_gjerne_med_veibeskrivelse_fra_bergen_sentrum }}</td>
-                                <td>{{ submission.form_data.navn_pa_fakturamottaker }}</td>
-                                <td>{{ submission.form_data.fakturaadresse }}</td>
-                                <td>{{ submission.form_data.organisasjonsnummer_til_fakturamottaker }}</td>
-                                <td>{{ submission.form_data.referanse_feks_ressursnr_om_faktura_skal_til_fylkekommune }}</td>                                
-                              </tr>
-                            {% endfor %}
-                          </tbody>
-                    </table>
-                {% else %}
-                    <div class="no-jobs">
-                        <p>No job submissions found.</p>
-                    </div>
-                {% endif %}
+        {% if form_submissions %}
+            <div class="table-wrapper">
+                <table class="jobs-table">
+                    <thead>
+                        <tr>
+                            <th>Submission Date</th>
+                            <th>Navn på skole/organisasjon</th>
+                            <th>Kontaktperson</th>
+                            <th>Telefon</th>
+                            <th>E-post</th>
+                            <th>Dato</th>
+                            <th>Start tid</th>
+                            <th>Slutt tid</th>
+                            <th>Gruppe type</th>
+                            <th>Antall grupper</th>
+                            <th>Gruppestørrelser</th>
+                            <th>Kjønnsfordeling</th>
+                            <th>Alder/Klassetrinn</th>
+                            <th>Har MSO undervist her før?</th>
+                            <th>Tilleggsinformasjon</th>
+                            <th>Besøksadresse</th>
+                            <th>Navn på fakturamottaker</th>
+                            <th>Fakturaadresse</th>
+                            <th>Organisasjonsnummer til fakturamottaker	</th>
+                            <th>Referanse</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for submission in form_submissions %}
+                          <tr>
+                            <td>{{ submission.submit_time|date:"F j, Y, g:i a" }}</td>
+                            <td>{{ submission.form_data.navn_pa_skoleorganisasjon }}</td>
+                            <td>{{ submission.form_data.kontaktperson }}</td>
+                            <td>{{ submission.form_data.telefon }}</td>
+                            <td>{{ submission.form_data.epost }}</td>
+                            <td>{{ submission.form_data.dato }}</td>
+                            <td>{{ submission.form_data.start_tid }}</td>
+                            <td>{{ submission.form_data.slutt_tid }}</td>
+                            <td>{{ submission.form_data.gruppe_type }}</td>
+                            <td>{{ submission.form_data.antall_grupper }}</td>
+                            <td>{{ submission.form_data.gruppestxf8rrelser }}</td>
+                            <td>{{ submission.form_data.kjxf8nnsfordeling }}</td>
+                            <td>{{ submission.form_data.alderklassetrinn }}</td>
+                            <td>{{ submission.form_data.har_mso_undervist_her_fxf8r }}</td>
+                            <td>{{ submission.form_data.tilleggsinformasjon }}</td>
+                            <td>{{ submission.form_data.besxf8ksadresse_gjerne_med_veibeskrivelse_fra_bergen_sentrum }}</td>
+                            <td>{{ submission.form_data.navn_pa_fakturamottaker }}</td>
+                            <td>{{ submission.form_data.fakturaadresse }}</td>
+                            <td>{{ submission.form_data.organisasjonsnummer_til_fakturamottaker }}</td>
+                            <td>{{ submission.form_data.referanse_feks_ressursnr_om_faktura_skal_til_fylkekommune }}</td>                                
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                </table>
             </div>
-        </section>
-
-        <footer>
-            
-        </footer>
-
-        {# Global javascript #}
-        <script type="text/javascript" src="{% static 'js/mso_website.js' %}"></script>
-
-        {% block extra_js %}
-        {# Override this in templates to add extra javascript #}
-        {% endblock %}
-    </body>
-</html>
+        {% else %}
+            <div class="no-jobs">
+                <p>No job submissions found.</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
