@@ -4,6 +4,13 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Profile(models.Model):
+
+    GENDER_CHOICES = [
+        ('M', 'Mann'),
+        ('K', 'Kvinne'),
+        ('A', 'Annet'),
+    ]
+
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
@@ -11,7 +18,12 @@ class Profile(models.Model):
         related_name="profile"
     )
     telefon =  models.TextField(blank=True, null=True)
-    kjønn = models.TextField(blank=True, null=True)
+    kjønn = models.CharField(
+        max_length=1,
+        choices=GENDER_CHOICES,
+        blank=True,
+        null=True,
+    )
     kull = models.TextField(blank=True, null=True)
     erfaren = models.BooleanField(default=False)
     pu_erfaren = models.BooleanField(default=False)

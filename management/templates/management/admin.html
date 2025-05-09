@@ -82,6 +82,7 @@
                             <th>PU Erfaren</th>
                             <th>FUS Erfaren</th>
                             <th>Over 72t</th>
+                            <th>Timer</th>
                             <th>Internundervisning</th>
                             <th>Styremedlem</th>
                             
@@ -100,6 +101,7 @@
                             <td>{{ user.profile.pu_erfaren|yesno:"✓,-" }}</td>
                             <td>{{ user.profile.fus_erfaren|yesno:"✓,-" }}</td>
                             <td>{{ user.profile.over_72h|yesno:"⭐,-" }}</td>
+                            <td>{{ user.profile.timer }}</td>
                             <td>{{ user.profile.internundervisning|yesno:"✓,-" }}</td>
                             <td>{{ user.profile.styremedlem|yesno:"✓,-" }}</td>
                                                        
