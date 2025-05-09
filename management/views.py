@@ -34,7 +34,6 @@ def profile_edit(request):
         form = ProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
-            messages.success(request, "Profilen din er oppdatert.")
             return redirect("profile.html")   # back to your view-profile URL
     else:
         form = ProfileForm(instance=profile)

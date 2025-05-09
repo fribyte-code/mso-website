@@ -24,13 +24,14 @@
         <p><strong>Styremedlem:</strong> {{ profile.styremedlem }}</p>
         <form action="{% url 'profile_edit.html' %}" method="get" style="display:inline;">
             <button type="submit" class="edit-profile-button">
-                Edit Profile
+                Edit my profile
             </button>
         </form>
+
     </div>
 
 {% block extra_js %}
-    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    
 {% endblock extra_js%}
 
 {% endblock %}

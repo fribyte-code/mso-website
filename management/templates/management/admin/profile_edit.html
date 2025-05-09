@@ -21,21 +21,22 @@
             {% endfor %}
         {% endif %}
 
-        <form href="/management/admin" method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="btn">Save changes</button>
         </form>
 
-        <form href="{% url 'admin-profile-edit' user.pk %}" method="get" style="display:inline;">
+        <form action="{% url 'profile.html' %}" method="get">
             <button type="submit" class="profile-button">
                 View profile
             </button>
         </form>
-
-        <form href="/management/admin" method="get" style="display:inline;">
-            <button type="submit" class="profile-button">
-                Return to admin
+        
+        <form action="/management/admin" method="get">
+            <button type="submit" class="btn">
+            Return to admin
             </button>
         </form>
+        
 {% endblock %}
