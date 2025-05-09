@@ -1,94 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-
-</html>
 {% load static wagtailcore_tags wagtailuserbar %}
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>
-            {% block title %}
-                {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
-            {% endblock %}
-            {% block title_suffix %}
-                {% wagtail_site as current_site %}
-                {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
-            {% endblock %}
-        </title>
-        {% if page.search_description %}
-        <meta name="description" content="{{ page.search_description }}" />
-        {% endif %}
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        {# Force all links in the live preview panel to be opened in a new tab #}
-        {% if request.in_preview_panel %}
-        <base target="_blank">
-        {% endif %}
-
-        {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/mso_website.css' %}">
-
-        {# Different Fonts #}
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
-
-        {% block extra_css %}
-        {# Override this in templates to add extra stylesheets #}
+<head>
+    <meta charset="utf-8" />
+    <title>
+        {% block title %}Edit Profile{% endblock %}
+        {% block title_suffix %}
+            {% wagtail_site as current_site %}
+            {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
         {% endblock %}
-    </head>
+    </title>
+    {% if page.search_description %}
+    <meta name="description" content="{{ page.search_description }}" />
+    {% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <body class="{% block body_class %}{% endblock %}">
-        {% wagtailuserbar %}
+    {% if request.in_preview_panel %}
+    <base target="_blank">
+    {% endif %}
 
-        <div class="navbar">
-            <a href="/" class="navbar-left"><img src="{% static 'images/mso_logo.webp' %}" alt="MSO_logo.png" height="60px" width="60px"></a>
-            <div class="navbar-center"><a href="/management" class="link">Management</a></div>
-            <div class="navbar-center"><a href="/management/profile" class="link">User Profile</a></div>
-            <div class="navbar-center"><a href="/management/jobs" class="link">Jobs</a></div>
-            <div class="navbar-center"><a href="/admin" class="link">Admin Panel</a></div>
-            <button type="signInButton" class="signInButton" onclick=window.location.href='{% url 'wagtailadmin_logout' %}'>Sign out</button>
+    {# Global stylesheet #}
+    <link rel="stylesheet" href="{% static 'css/mso_website.css' %}">
+
+    {% block extra_css %}
+    <style>
+      /* Make all text inputs and textareas red */
+      textarea{
+        max-height: 20px;
+      }
+      
+    </style>
+    {% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    {% wagtailuserbar %}
+
+    <div class="navbar">
+        <a href="/" class="navbar-left">
+            <img src="{% static 'images/mso_logo.webp' %}" alt="MSO logo" height="60" width="60">
+        </a>
+        <div class="navbar-center"><a href="/management" class="link">Management</a></div>
+        <div class="navbar-center"><a href="/management/profile" class="link">User Profile</a></div>
+        <div class="navbar-center"><a href="/management/jobs" class="link">Jobs</a></div>
+        <div class="navbar-center"><a href="/admin" class="link">Admin Panel</a></div>
+        <button type="button" class="signInButton"
+                onclick="window.location.href='{% url 'wagtailadmin_logout' %}'">
+            Sign out
+        </button>
+    </div>
+
+    <section class="main-content">
+        <div>
+            {% block content %}
+                <h1>Edit your profile</h1>
+
+                {% if messages %}
+                  {% for msg in messages %}
+                    <div class="textbox">{{ msg }}</div>
+                  {% endfor %}
+                {% endif %}
+
+                <form method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <button type="submit" class="btn">Save changes</button>
+                </form>
+
+                <form action="{% url 'profile.html' %}" method="get" style="display:inline;">
+                    <button type="submit" class="profile-button">
+                        Return to profile
+                    </button>
+                </form>
+            {% endblock %}
         </div>
-        <section class="main-content">
-            <div>
-                {% block content %}
-                    <h1>Edit your profile</h1>                  
-                    {% if messages %}
-                      {% for msg in messages %}
-                        <div class="alert alert-{{ msg.tags }}">{{ msg }}</div>
-                      {% endfor %}
-                    {% endif %}                 
-                    <form method="post" enctype="multipart/form-data">
-                      {% csrf_token %}
-                      {{ form.as_p }}
-                      <form action="{% url 'profile.html' %}" method="get" style="display:inline;">
-                        <button type="submit" class="btn">Save changes</button>
-                      </form>
-                      
-                    </form>
-                  <p>
-                    <form action="{% url 'profile.html' %}" method="get" style="display:inline;">
-                        <button type="submit" class="profile-button">
-                            Return to profile
-                        </button>
-                    </form>
-                  </p>
-                {% endblock %}
-            </div>
-        </section>
+    </section>
 
-        <footer>
-            
-        </footer>
+    <footer></footer>
 
-        {# Global javascript #}
-        <script type="text/javascript" src="{% static 'js/mso_website.js' %}"></script>
-
-        {% block extra_js %}
-        {# Override this in templates to add extra javascript #}
-        {% endblock %}
-    </body>
+    <script src="{% static 'js/mso_website.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
 </html>
