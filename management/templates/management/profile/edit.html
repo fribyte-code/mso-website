@@ -54,27 +54,29 @@
         </div>
         <section class="main-content">
             <div>
-                    {% block content %}
-                        <h1>USER PROFILE PAGE</h1>
-                        <p><strong>Username:</strong> {{ user.username }}</p>
-                        <p><strong>Fullname:</strong> {{ user.get_full_name }}</p>
-                        <p><strong>Email:</strong> {{ user.email }}</p>
-                        <p><strong>Telefon:</strong> {{ profile.telefon|default:"–" }}</p>
-                        <p><strong>Kjønn:</strong> {{ profile.get_kjønn_display|default:"–" }}</p>
-                        <p><strong>Kull:</strong> {{ profile.kull|default:"–" }}</p>
-                        <p><strong>Erfaren:</strong> {{ profile.erfaren }}</p>
-                        <p><strong>PU Erfaren:</strong> {{ profile.pu_erfaren }}</p>
-                        <p><strong>FUS Erfaren:</strong> {{ profile.fus_erfaren }}</p>
-                        <p><strong>Over 72t:</strong> {{ profile.over_72h }}</p>
-                        <p><strong>Internundervisning:</strong> {{ profile.internundervisning }}</p>
-                        <p><strong>Styremedlem:</strong> {{ profile.styremedlem }}</p>
-                        <form action="{% url 'profile_edit.html' %}" method="get" style="display:inline;">
-                            <button type="submit" class="edit-profile-button">
-                                Edit Profile
-                            </button>
-                        </form>
-
-                    {% endblock %}
+                {% block content %}
+                    <h1>Edit your profile</h1>                  
+                    {% if messages %}
+                      {% for msg in messages %}
+                        <div class="alert alert-{{ msg.tags }}">{{ msg }}</div>
+                      {% endfor %}
+                    {% endif %}                 
+                    <form method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      {{ form.as_p }}
+                      <form action="{% url 'profile.html' %}" method="get" style="display:inline;">
+                        <button type="submit" class="btn">Save changes</button>
+                      </form>
+                      
+                    </form>
+                  <p>
+                    <form action="{% url 'profile.html' %}" method="get" style="display:inline;">
+                        <button type="submit" class="profile-button">
+                            Return to profile
+                        </button>
+                    </form>
+                  </p>
+                {% endblock %}
             </div>
         </section>
 
