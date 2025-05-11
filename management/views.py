@@ -8,6 +8,8 @@ from .models import Profile, Job
 from .forms import ProfileForm, AdminProfileForm
 from django.contrib.auth.models import User
 from django.contrib import messages 
+from django.db import models
+from django.db.models import Case, When, Value, BooleanField, F
 
 @login_required(redirect_field_name="next", login_url="/management/login/")
 def index(request):
@@ -43,12 +45,24 @@ def profile_edit(request):
     })
 
 
-@login_required(redirect_field_name="next", login_url="/management/login/")
+@staff_member_required(redirect_field_name="next", login_url="/management/login/")
 def jobs(request):
-    jobs = (Job.objects.select_related("submission").order_by("-submission__submit_time"))
+    if request.method == "POST":
+        
+        #gets a list of all checklisted items and makes a list of them
+        selected_jobs = request.POST.getlist('selected_jobs')
 
+        jobs_to_toggle = Job.objects.filter(id__in=selected_jobs).update(
+            job_is_active=Case(
+                When(job_is_active=False, then=Value(True)),
+                default=Value(False))
+            )
+        
+        return redirect('jobs')  
+
+    jobs = Job.objects.select_related("submission").order_by("-submission__submit_time")
     return render(request, "management/jobs.html", {
-        "jobs":jobs,
+        "jobs": jobs,
     })
 
 @staff_member_required(redirect_field_name="next", login_url="/management/login/")
@@ -64,7 +78,6 @@ def admin_profile_edit(request, pk):
     user    = get_object_or_404(User, pk=pk)
     profile, created = Profile.objects.get_or_create(user=user)
 
-    # pick the “admin” version of the form if you made 2 forms
     form = AdminProfileForm(request.POST or None,
                             request.FILES or None,
                             instance=profile)

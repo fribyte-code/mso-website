@@ -15,11 +15,6 @@
 
 {% block content %}
     <h1>Edit your profile</h1>
-        {% if messages %}
-            {% for msg in messages %}
-                <div class="textbox">{{ msg }}</div>
-            {% endfor %}
-        {% endif %}
 
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
