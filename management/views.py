@@ -63,7 +63,7 @@ def admin(request):
 @staff_member_required(redirect_field_name="next", login_url="/management/login/")
 def admin_profile_edit(request, pk):
     user    = get_object_or_404(User, pk=pk)
-    profile = user.profile
+    profile, created = Profile.objects.get_or_create(user=user)
 
     # pick the “admin” version of the form if you made 2 forms
     form = AdminProfileForm(request.POST or None,

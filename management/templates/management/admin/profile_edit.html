@@ -26,12 +26,6 @@
             {{ form.as_p }}
             <button type="submit" class="btn">Save changes</button>
         </form>
-
-        <form action="{% url 'profile.html' %}" method="get">
-            <button type="submit" class="profile-button">
-                View profile
-            </button>
-        </form>
         
         <form action="/management/admin" method="get">
             <button type="submit" class="btn">
