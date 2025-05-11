@@ -23,54 +23,44 @@ def index(request):
 
         jobs = Job.objects.filter(id__in=selected_jobs)
 
-        if profile.kjønn == "K":
-            successful = Job.objects.filter(id__in=selected_jobs, assigned_to_F__isnull=True).update(assigned_to_F=profile)
-            if successful:
-                messages.success(request, f"Job(s) successfully assigned to you")
-            else:
-                messages.warning(request, f"One or more job is already occupied")
-            return redirect('index')
-                
-        if profile.kjønn == "M":
-            successful = Job.objects.filter(id__in=selected_jobs, assigned_to_M__isnull=True).update(assigned_to_M=profile)
-            if successful:
-                messages.success(request, f"Job(s) successfully assigned to you")
-            else:
-                messages.warning(request, f"One or more job is already occupied")
-            return redirect('index')
+        action = request.POST.get("action")
+
+        if action == "assign":
+
+            if profile.kjønn == "K":
+                successful = Job.objects.filter(id__in=selected_jobs, assigned_to_F__isnull=True).update(assigned_to_F=profile)
+                if successful:
+                    messages.success(request, f"Job(s) successfully assigned to you")
+                else:
+                    messages.warning(request, f"One or more job is already occupied")
+                return redirect('index')
+
+            if profile.kjønn == "M":
+                successful = Job.objects.filter(id__in=selected_jobs, assigned_to_M__isnull=True).update(assigned_to_M=profile)
+                if successful:
+                    messages.success(request, f"Job(s) successfully assigned to you")
+                else:
+                    messages.warning(request, f"One or more job is already occupied")
+                return redirect('index')
         
-    jobs = Job.objects.select_related("submission").filter(job_is_active=True).order_by("-submission__submit_time")
-    return render(request, "management.html", {
-        "jobs": jobs,
-    })
+        elif action == "unassign":
+            
+            if profile.kjønn == "K":
+                successful = Job.objects.filter(id__in=selected_jobs, assigned_to_F=profile).update(assigned_to_F=None)
+                if successful:
+                    messages.success(request, f"Job(s) successfully unassigned from you")
+                else:
+                    messages.warning(request, f"Unsuccessful unassign")
+                return redirect('index')
 
-@login_required(redirect_field_name="next", login_url="/management/login/")
-def unassign_job(request):
+            if profile.kjønn == "M":
+                successful = Job.objects.filter(id__in=selected_jobs, assigned_to_M=profile).update(assigned_to_M=None)
+                if successful:
+                    messages.success(request, f"Job(s) successfully unassigned from you")
+                else:
+                    messages.warning(request, f"Unsuccessful unassign")
+                return redirect('index')
 
-    if request.method == "POST":
-        
-        #gets a list of all checklisted items and makes a list of them
-        selected_jobs = request.POST.getlist('selected_jobs')
-
-        profile = get_object_or_404(Profile, user=request.user)
-
-        jobs = Job.objects.filter(id__in=selected_jobs)
-
-        if profile.kjønn == "K":
-            successful = Job.objects.filter(id__in=selected_jobs, assigned_to_F=profile).update(assigned_to_F=None)
-            if successful:
-                messages.success(request, f"Job(s) successfully unassigned from you")
-            else:
-                messages.warning(request, f"Unsuccessful unassign")
-            return redirect('index')
-                
-        if profile.kjønn == "M":
-            successful = Job.objects.filter(id__in=selected_jobs, assigned_to_M=profile).update(assigned_to_M=None)
-            if successful:
-                messages.success(request, f"Job(s) successfully unassigned from you")
-            else:
-                messages.warning(request, f"Unsuccessful unassign")
-            return redirect('index')
         
     jobs = Job.objects.select_related("submission").filter(job_is_active=True).order_by("-submission__submit_time")
     return render(request, "management.html", {

@@ -6,7 +6,6 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("", views.unassign_job, name="unassign_job"),
     path(
         "login/",
         LoginView.as_view(template_name="management/login.html"),
