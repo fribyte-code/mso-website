@@ -6,6 +6,7 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("my_jobs/", views.my_assigned_jobs, name="my_assigned_jobs"),
     path(
         "login/",
         LoginView.as_view(template_name="management/login.html"),

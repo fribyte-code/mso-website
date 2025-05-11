@@ -55,25 +55,9 @@
 
 {% block content %}
     <div>
-        <h1>All available jobs</h1>
-        <form method="post" action="{% url 'index' %}">
-            {% csrf_token %}
-            <button type="submit" name="action" value="assign" class="btn">Assign yourself to selected jobs</button>
-        
-            <button type="submit" name="action" value="unassign" class="btn">Unassign yourself to selected jobs</button>
-        
-            {% if messages %}
-              <div class="container mt-3">
-                {% for message in messages %}
-                  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                {% endfor %}
-              </div>
-            {% endif %}
+        <h1>My assigned jobs</h1>
 
-            {% if jobs %}
+            {% if my_assigned_jobs %}
                 <div class="table-wrapper">
                     <table class="jobs-table sortable">
                         <input
@@ -84,7 +68,6 @@
                         >
                         <thead>
                             <tr>
-                                <th></th>
                                 <th>Submission Date</th>
                                 <th>Assigned to (M)</th>
                                 <th>Assigned to (K)</th>
@@ -110,13 +93,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for job in jobs %}
+                            {% for job in my_assigned_jobs %}
                                 <tr>
-                                    <td class="check">
-                                        <label>
-                                            <input type="checkbox" name="selected_jobs" value="{{ job.id }}" />
-                                        </label>
-                                    </td>
                                     <td>{{ job.submission.submit_time|date:"F j, Y, g:i a" }}</td>
                                     <td>{{ job.assigned_to_M.user.get_full_name }}</td>
                                     <td>{{ job.assigned_to_F.user.get_full_name }}</td>
@@ -146,10 +124,10 @@
                 </div>
             {% else %}
                 <div class="no-jobs">
-                    <p>No job submissions found.</p>
+                    <p>No jobs assigned to you.</p>
                 </div>
             {% endif %}
-        </form>
+        
     </div>
 
     <script>

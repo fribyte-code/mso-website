@@ -67,6 +67,21 @@ def index(request):
         "jobs": jobs,
     })
 
+@login_required(redirect_field_name="next", login_url="/management/login/")
+def my_assigned_jobs(request):
+
+    profile = get_object_or_404(Profile, user=request.user)
+
+    if profile.kjønn == "K":
+        my_assigned_jobs = Job.objects.select_related("submission").filter(assigned_to_F=profile).order_by("-submission__submit_time")
+        
+
+    else:
+        my_assigned_jobs = Job.objects.select_related("submission").filter(assigned_to_M=profile).order_by("-submission__submit_time")
+        
+    return render(request, "management/my_assigned_jobs.html", {
+            "my_assigned_jobs": my_assigned_jobs,
+        })
    
 def logout_view(request):
     logout(request)

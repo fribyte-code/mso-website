@@ -42,7 +42,8 @@
 
         <div class="navbar">
             <a href="/" class="navbar-left"><img src="{% static 'images/mso_logo.webp' %}" alt="MSO_logo.png" height="60px" width="60px"></a>
-            <div class="navbar-center"><a href="/management" class="link">Management</a></div>
+            <div class="navbar-center"><a href="/management" class="link">Job Signup</a></div>
+            <div class="navbar-center"><a href="/management/my_jobs" class="link">My Assigned Jobs</a></div>
             <div class="navbar-center"><a href="/management/profile" class="link">User Profile</a></div>
             {% if request.user.is_superuser %}
                 <div class="navbar-center"><a href="/management/jobs" class="link">Requested Jobs</a></div>
