@@ -19,8 +19,10 @@ def index(request):
         #gets a list of all checklisted items and makes a list of them
         selected_jobs = request.POST.getlist('selected_jobs')
 
-        for job in selected_jobs:
-            job.assigned_to.add(user.get_full_name)
+
+
+       
+            
         
         return redirect('management')  
     

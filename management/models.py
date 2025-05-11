@@ -41,8 +41,15 @@ class Job(models.Model):
         related_name="job"
     )
 
-    assigned_to = models.ManyToManyField(
+    assigned_to_M = models.ManyToManyField(
         Profile,
+        related_name = "assigned_to_M",
+        default=None
+    )
+
+    assigned_to_F = models.ManyToManyField(
+        Profile,
+        related_name = "assigned_to_F",
         default=None
     )
 
