@@ -13,7 +13,23 @@ from django.db.models import Case, When, Value, BooleanField, F
 
 @login_required(redirect_field_name="next", login_url="/management/login/")
 def index(request):
-    return render(request, "management.html")
+
+    if request.method == "POST":
+        
+        #gets a list of all checklisted items and makes a list of them
+        selected_jobs = request.POST.getlist('selected_jobs')
+
+        for job in selected_jobs:
+            job.assigned_to.add(user.get_full_name)
+        
+        return redirect('management')  
+    
+    jobs = Job.objects.select_related("submission").filter(job_is_active=True).order_by("-submission__submit_time")
+    return render(request, "management.html", {
+        "jobs": jobs,
+    })
+
+   
 
 def logout_view(request):
     logout(request)

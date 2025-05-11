@@ -45,7 +45,7 @@
             <div class="navbar-center"><a href="/management" class="link">Management</a></div>
             <div class="navbar-center"><a href="/management/profile" class="link">User Profile</a></div>
             {% if request.user.is_superuser %}
-                <div class="navbar-center"><a href="/management/jobs" class="link">Jobs</a></div>
+                <div class="navbar-center"><a href="/management/jobs" class="link">Requested Jobs</a></div>
                 <div class="navbar-center"><a href="/management/admin" class="link">Admin</a></div>
             {% endif %}
             <button type="signInButton" class="signInButton" onclick=window.location.href='{% url 'wagtailadmin_logout' %}'>Sign out</button>
