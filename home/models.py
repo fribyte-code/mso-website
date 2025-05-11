@@ -7,6 +7,7 @@ from wagtail.admin.panels import (
     FieldPanel, FieldRowPanel,
     InlinePanel, MultiFieldPanel
 )
+from management.models import Job
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 
 class DefaultPage(Page):
@@ -60,9 +61,8 @@ class FormPage(AbstractEmailForm):
         
         ### Insert email sending logic here ###
 
-        print(form)
-
-        return self.get_submission_class().objects.create(
-            form_data=form.cleaned_data,
-            page=self, 
-        )
+        submission = super().process_form_submission(form)
+        Job.objects.create(submission=submission)
+        print(submission)
+        return submission
+        

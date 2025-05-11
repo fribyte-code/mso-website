@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from wagtail.contrib.forms.models import FormSubmission
 
 # Create your models here.
 
@@ -33,5 +34,17 @@ class Profile(models.Model):
     styremedlem = models.BooleanField(default=False)
 
 
+class Job(models.Model):
+    submission = models.OneToOneField(
+        FormSubmission,
+        on_delete=models.CASCADE,
+        related_name="job"
+    )
 
-    
+    assigned_to = models.ManyToManyField(
+        Profile,
+        default=None
+    )
+
+    job_is_active = models.BooleanField(default=False)
+

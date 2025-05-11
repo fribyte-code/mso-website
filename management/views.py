@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 from wagtail.contrib.forms.models import FormSubmission
 from home.models import FormPage
-from .models import Profile
+from .models import Profile, Job
 from .forms import ProfileForm, AdminProfileForm
 from django.contrib.auth.models import User
 from django.contrib import messages 
@@ -45,11 +45,10 @@ def profile_edit(request):
 
 @login_required(redirect_field_name="next", login_url="/management/login/")
 def jobs(request):
-
-    form_submissions = FormSubmission.objects.filter(page__in=FormPage.objects.all()).order_by('-submit_time')
+    jobs = (Job.objects.select_related("submission").order_by("-submission__submit_time"))
 
     return render(request, "management/jobs.html", {
-        "form_submissions": form_submissions
+        "jobs":jobs,
     })
 
 @staff_member_required(redirect_field_name="next", login_url="/management/login/")
