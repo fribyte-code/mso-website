@@ -24,11 +24,19 @@ def index(request):
         jobs = Job.objects.filter(id__in=selected_jobs)
 
         if profile.kjønn == "K":
-            Job.objects.filter(id__in=selected_jobs).update(assigned_to_F=profile)
+            successful = Job.objects.filter(id__in=selected_jobs, assigned_to_F__isnull=True).update(assigned_to_F=profile)
+            if successful:
+                messages.success(request, f"Job(s) successfully assigned to you")
+            else:
+                messages.warning(request, f"One or more job is already occupied")
             return redirect('index')
-        
+                
         if profile.kjønn == "M":
-            Job.objects.filter(id__in=selected_jobs).update(assigned_to_M=profile)
+            successful = Job.objects.filter(id__in=selected_jobs, assigned_to_M__isnull=True).update(assigned_to_M=profile)
+            if successful:
+                messages.success(request, f"Job(s) successfully assigned to you")
+            else:
+                messages.warning(request, f"One or more job is already occupied")
             return redirect('index')
         
     jobs = Job.objects.select_related("submission").filter(job_is_active=True).order_by("-submission__submit_time")
