@@ -60,6 +60,10 @@
             {% csrf_token %}
             <button type="submit" class="btn">Assign yourself to selected jobs</button>
 
+        <form method="post" action="{% url 'unassign_job' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn">Unassign yourself to selected jobs</button>
+
             {% if messages %}
               <div class="container mt-3">
                 {% for message in messages %}
