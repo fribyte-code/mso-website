@@ -56,9 +56,9 @@
     <div>
         <h1>Requested Jobs</h1>
 
-        <form method="post" enctype="multipart/form-data">
+        <form method="post">
             {% csrf_token %}
-            <button type="submit" class="btn">Activate selected jobs</button>
+            <button type="submit" class="btn">Toggle activation on selected jobs</button>
         </form>
 
         {% if jobs %}
@@ -77,6 +77,7 @@
                             <th></th>
                             <th>Submission Date</th>
                             <th>Activated</th>
+                            <th>ID</th>
                             <th>Assigned to</th>
                             <th>Navn på skole/organisasjon</th>
                             <th>Kontaktperson</th>
@@ -105,6 +106,7 @@
                             <td class="check"><label><input class="check" type="checkbox" /></label></td>
                             <td>{{ job.submission.submit_time|date:"F j, Y, g:i a" }}</td>
                             <td>{{ job.job_is_active }}</td>
+                            <td>{{ job.submission_id }}</td>
                             <td>{{ job.assigned_to }}</td>
                             <td>{{ job.submission.form_data.navn_pa_skoleorganisasjon }}</td>
                             <td>{{ job.submission.form_data.kontaktperson }}</td>
