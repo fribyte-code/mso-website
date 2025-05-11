@@ -9,7 +9,6 @@ class Profile(models.Model):
     GENDER_CHOICES = [
         ('M', 'Mann'),
         ('K', 'Kvinne'),
-        ('A', 'Annet'),
     ]
 
     user = models.OneToOneField(
@@ -41,14 +40,18 @@ class Job(models.Model):
         related_name="job"
     )
 
-    assigned_to_M = models.ManyToManyField(
+    assigned_to_M = models.ForeignKey(
         Profile,
+        on_delete=models.SET_NULL,
+        null=True,
         related_name = "assigned_to_M",
         default=None
     )
 
-    assigned_to_F = models.ManyToManyField(
+    assigned_to_F = models.ForeignKey(
         Profile,
+        on_delete=models.SET_NULL,
+        null=True,
         related_name = "assigned_to_F",
         default=None
     )

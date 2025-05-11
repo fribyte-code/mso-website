@@ -19,13 +19,21 @@ def index(request):
         #gets a list of all checklisted items and makes a list of them
         selected_jobs = request.POST.getlist('selected_jobs')
 
+        profile = get_object_or_404(Profile, user=request.user)
 
+        jobs = Job.objects.filter(id__in=selected_jobs)
 
-       
+        if profile.kjønn == "K":
+             Job.objects.filter(id__in=selected_jobs).update(assigned_to_F=profile)
+             print(profile)
             
         
-        return redirect('management')  
-    
+        if profile.kjønn == "M":
+             Job.objects.filter(id__in=selected_jobs).update(assigned_to_M=profile)
+             print(profile.username)
+        
+        return redirect('index')
+        
     jobs = Job.objects.select_related("submission").filter(job_is_active=True).order_by("-submission__submit_time")
     return render(request, "management.html", {
         "jobs": jobs,

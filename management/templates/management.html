@@ -56,7 +56,7 @@
 {% block content %}
     <div>
         <h1>Management</h1>
-        <form method="post" action="{% url 'jobs' %}">
+        <form method="post" action="{% url 'index' %}">
             {% csrf_token %}
             <button type="submit" class="btn">Assign yourself to selected jobs</button>
 
@@ -73,8 +73,8 @@
                             <tr>
                                 <th></th>
                                 <th>Submission Date</th>
-                                <th>ID</th>
-                                <th>Assigned to</th>
+                                <th>Assigned to (M)</th>
+                                <th>Assigned to (K)</th>
                                 <th>Navn på skole/organisasjon</th>
                                 <th>Kontaktperson</th>
                                 <th>Telefon</th>
@@ -105,8 +105,8 @@
                                         </label>
                                     </td>
                                     <td>{{ job.submission.submit_time|date:"F j, Y, g:i a" }}</td>
-                                    <td>{{ job.submission_id }}</td>
-                                    <td>{{ job.assigned_to }}</td>
+                                    <td>{{ job.assigned_to_M }}</td>
+                                    <td>{{ job.assigned_to_F.profile.get_full_name }}</td>
                                     <td>{{ job.submission.form_data.navn_pa_skoleorganisasjon }}</td>
                                     <td>{{ job.submission.form_data.kontaktperson }}</td>
                                     <td>{{ job.submission.form_data.telefon }}</td>
