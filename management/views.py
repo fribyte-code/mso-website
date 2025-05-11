@@ -24,15 +24,12 @@ def index(request):
         jobs = Job.objects.filter(id__in=selected_jobs)
 
         if profile.kjønn == "K":
-             Job.objects.filter(id__in=selected_jobs).update(assigned_to_F=profile)
-             print(profile)
-            
+            Job.objects.filter(id__in=selected_jobs).update(assigned_to_F=profile)
+            return redirect('index')
         
         if profile.kjønn == "M":
-             Job.objects.filter(id__in=selected_jobs).update(assigned_to_M=profile)
-             print(profile.username)
-        
-        return redirect('index')
+            Job.objects.filter(id__in=selected_jobs).update(assigned_to_M=profile)
+            return redirect('index')
         
     jobs = Job.objects.select_related("submission").filter(job_is_active=True).order_by("-submission__submit_time")
     return render(request, "management.html", {

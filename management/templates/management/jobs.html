@@ -109,8 +109,8 @@
                                     <td>{{ job.submission.submit_time|date:"F j, Y, g:i a" }}</td>
                                     <td>{{ job.job_is_active }}</td>
                                     <td>{{ job.submission_id }}</td>
-                                    <td>{{ job.assigned_to_M }}</td>
-                                    <td>{{ job.assigned_to_F }}</td>
+                                    <td>{{ job.assigned_to_M.user.get_full_name }}</td>
+                                    <td>{{ job.assigned_to_F.user.get_full_name }}</td>
                                     <td>{{ job.submission.form_data.navn_pa_skoleorganisasjon }}</td>
                                     <td>{{ job.submission.form_data.kontaktperson }}</td>
                                     <td>{{ job.submission.form_data.telefon }}</td>
