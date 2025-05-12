@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages 
 from django.db import models
 from django.db.models import Case, When, Value, BooleanField, F
+from datetime import datetime, timedelta
 
 @login_required(redirect_field_name="next", login_url="/management/login/")
 def index(request):
@@ -67,6 +68,13 @@ def index(request):
         "jobs": jobs,
     })
 
+def time_to_num(time_str):
+    time = time_str.split(':')
+    hour = int(time[0])
+    minutes = int(time[1])/60
+    returnTime = hour + minutes
+    return returnTime
+
 @login_required(redirect_field_name="next", login_url="/management/login/")
 def my_assigned_jobs(request):
 
@@ -95,7 +103,35 @@ def my_assigned_jobs(request):
                 When(job_is_completed=False, then=Value(True)),
                 default=Value(False))
             )
-        
+    
+            user_work_time = profile.timer
+
+            for each_job in jobs:
+                start_time = each_job.submission.form_data['start_tid']
+                end_time = each_job.submission.form_data['slutt_tid']
+
+                start_dt = datetime.strptime(start_time, "%H:%M")
+                end_dt = datetime.strptime(end_time, "%H:%M")
+
+                job_duration = end_dt - start_dt
+
+                int_job_duration = time_to_num(str(job_duration))
+
+                if not each_job.job_is_completed:
+                    user_work_time -= int_job_duration
+                else:
+                    user_work_time += int_job_duration
+
+            print(user_work_time)
+
+    
+        profile.timer = user_work_time
+        profile.save(update_fields=["timer"])       
+    print(profile.timer)
+           
+            
+
+
     return render(request, "management/my_assigned_jobs.html", {
             "my_assigned_jobs": my_assigned_jobs,
             "job_is_completed": job_is_completed,
