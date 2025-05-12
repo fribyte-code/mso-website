@@ -57,4 +57,5 @@ class Job(models.Model):
     )
 
     job_is_active = models.BooleanField(default=False)
+    job_is_completed = models.BooleanField(default=False)
 

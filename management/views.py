@@ -75,12 +75,30 @@ def my_assigned_jobs(request):
     if profile.kjønn == "K":
         my_assigned_jobs = Job.objects.select_related("submission").filter(assigned_to_F=profile).order_by("-submission__submit_time")
         
-
     else:
         my_assigned_jobs = Job.objects.select_related("submission").filter(assigned_to_M=profile).order_by("-submission__submit_time")
+
+    job_is_completed = Job.objects.select_related("submission").filter(job_is_completed=True).order_by("-submission__submit_time")
+
+    if request.method == "POST":
+
+        #gets a list of all checklisted items and makes a list of them
+        selected_jobs = request.POST.getlist('selected_jobs')
+
+        jobs = Job.objects.filter(id__in=selected_jobs)
+
+        action = request.POST.get("action")
+
+        if action == "job_is_completed":
+            Job.objects.filter(id__in=selected_jobs).update(
+            job_is_completed=Case(
+                When(job_is_completed=False, then=Value(True)),
+                default=Value(False))
+            )
         
     return render(request, "management/my_assigned_jobs.html", {
             "my_assigned_jobs": my_assigned_jobs,
+            "job_is_completed": job_is_completed,
         })
    
 def logout_view(request):
