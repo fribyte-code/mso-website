@@ -101,12 +101,90 @@
                         </thead>
                         <tbody>
                             {% for job in jobs %}
+                                {% if not job.job_is_completed %}
+                                    <tr>
+                                        <td class="check">
+                                            <label>
+                                                <input type="checkbox" name="selected_jobs" value="{{ job.id }}" />
+                                            </label>
+                                        </td>
+                                        <td>{{ job.submission.submit_time|date:"F j, Y, g:i a" }}</td>
+                                        <td>{{ job.job_is_active }}</td>
+                                        <td>{{ job.job_is_completed }}</td>
+                                        <td>{{ job.submission_id }}</td>
+                                        <td>{{ job.assigned_to_M.user.get_full_name }}</td>
+                                        <td>{{ job.assigned_to_F.user.get_full_name }}</td>
+                                        <td>{{ job.submission.form_data.navn_pa_skoleorganisasjon }}</td>
+                                        <td>{{ job.submission.form_data.kontaktperson }}</td>
+                                        <td>{{ job.submission.form_data.telefon }}</td>
+                                        <td>{{ job.submission.form_data.epost }}</td>
+                                        <td>{{ job.submission.form_data.dato }}</td>
+                                        <td>{{ job.submission.form_data.start_tid }}</td>
+                                        <td>{{ job.submission.form_data.slutt_tid }}</td>
+                                        <td>{{ job.submission.form_data.gruppe_type }}</td>
+                                        <td>{{ job.submission.form_data.antall_grupper }}</td>
+                                        <td>{{ job.submission.form_data.gruppestxf8rrelser }}</td>
+                                        <td>{{ job.submission.form_data.kjxf8nnsfordeling }}</td>
+                                        <td>{{ job.submission.form_data.alderklassetrinn }}</td>
+                                        <td>{{ job.submission.form_data.har_mso_undervist_her_fxf8r }}</td>
+                                        <td>{{ job.submission.form_data.tilleggsinformasjon }}</td>
+                                        <td>{{ job.submission.form_data.besxf8ksadresse_gjerne_med_veibeskrivelse_fra_bergen_sentrum }}</td>
+                                        <td>{{ job.submission.form_data.navn_pa_fakturamottaker }}</td>
+                                        <td>{{ job.submission.form_data.fakturaadresse }}</td>
+                                        <td>{{ job.submission.form_data.organisasjonsnummer_til_fakturamottaker }}</td>
+                                        <td>{{ job.submission.form_data.referanse_feks_ressursnr_om_faktura_skal_til_fylkekommune }}</td>                                
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="no-jobs">
+                    <p>No job submissions found.</p>
+                </div>
+            {% endif %}
+        </form>
+    </div>
+
+    <div>
+        <h1>All completed jobs</h1>
+            {% if job_is_completed %}
+                <div class="table-wrapper">
+                    <table class="jobs-table sortable">
+                       
+                        <thead>
+                            <tr>
+                                <th>Submission Date</th>
+                                <th>Activated</th>
+                                <th>Completed</th>
+                                <th>ID</th>
+                                <th>Assigned to (M)</th>
+                                <th>Assigned to (F)</th>
+                                <th>Navn på skole/organisasjon</th>
+                                <th>Kontaktperson</th>
+                                <th>Telefon</th>
+                                <th>E-post</th>
+                                <th>Dato</th>
+                                <th>Start tid</th>
+                                <th>Slutt tid</th>
+                                <th>Gruppe type</th>
+                                <th>Antall grupper</th>
+                                <th>Gruppestørrelser</th>
+                                <th>Kjønnsfordeling</th>
+                                <th>Alder/Klassetrinn</th>
+                                <th>Har MSO undervist her før?</th>
+                                <th>Tilleggsinformasjon</th>
+                                <th>Besøksadresse</th>
+                                <th>Navn på fakturamottaker</th>
+                                <th>Fakturaadresse</th>
+                                <th>Organisasjonsnummer til fakturamottaker</th>
+                                <th>Referanse</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for job in job_is_completed %}
                                 <tr>
-                                    <td class="check">
-                                        <label>
-                                            <input type="checkbox" name="selected_jobs" value="{{ job.id }}" />
-                                        </label>
-                                    </td>
                                     <td>{{ job.submission.submit_time|date:"F j, Y, g:i a" }}</td>
                                     <td>{{ job.job_is_active }}</td>
                                     <td>{{ job.job_is_completed }}</td>
@@ -142,8 +220,11 @@
                     <p>No job submissions found.</p>
                 </div>
             {% endif %}
-        </form>
     </div>
+
+
+
+
 
     <script>
         document

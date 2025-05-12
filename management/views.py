@@ -126,11 +126,7 @@ def my_assigned_jobs(request):
 
     
         profile.timer = user_work_time
-        profile.save(update_fields=["timer"])       
-    print(profile.timer)
-           
-            
-
+        profile.save(update_fields=["timer"])                 
 
     return render(request, "management/my_assigned_jobs.html", {
             "my_assigned_jobs": my_assigned_jobs,
@@ -169,6 +165,9 @@ def profile_edit(request):
 
 @staff_member_required(redirect_field_name="next", login_url="/management/login/")
 def jobs(request):
+
+    job_is_completed = Job.objects.select_related("submission").filter(job_is_completed=True).order_by("-submission__submit_time")
+
     if request.method == "POST":
         
         #gets a list of all checklisted items and makes a list of them
@@ -185,6 +184,7 @@ def jobs(request):
     jobs = Job.objects.select_related("submission").order_by("-submission__submit_time")
     return render(request, "management/jobs.html", {
         "jobs": jobs,
+        "job_is_completed": job_is_completed,
     })
 
 @staff_member_required(redirect_field_name="next", login_url="/management/login/")
