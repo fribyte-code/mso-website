@@ -31,6 +31,8 @@ class Profile(models.Model):
     timer = models.IntegerField(default=0)
     internundervisning = models.BooleanField(default=False)
     styremedlem = models.BooleanField(default=False)
+    last_job_date = models.DateField(blank=True, null=True)
+    months_since_last_job = models.IntegerField(blank=True, null=True)
 
 
 class Job(models.Model):

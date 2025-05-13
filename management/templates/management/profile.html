@@ -22,6 +22,8 @@
         <p><strong>Timer:</strong> {{ profile.timer }}</p>
         <p><strong>Internundervisning:</strong> {{ profile.internundervisning }}</p>
         <p><strong>Styremedlem:</strong> {{ profile.styremedlem }}</p>
+        <p><strong>Siste oppdrag:</strong> {{ profile.last_job_date }}</p>
+        
         <form action="{% url 'profile_edit.html' %}" method="get" style="display:inline;">
             <button type="submit" class="edit-profile-button">
                 Edit my profile

@@ -88,6 +88,8 @@
                             <th>Timer</th>
                             <th>Internundervisning</th>
                             <th>Styremedlem</th>
+                            <th>Siste oppdrag</th>
+                            <th>Måneder siden siste oppdrag</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -117,7 +119,9 @@
                             </td>
                             <td>{{ user.profile.timer }}</td>
                             <td>{{ user.profile.internundervisning|yesno:"✓," }}</td>
-                            <td>{{ user.profile.styremedlem|yesno:"✓," }}</td>                 
+                            <td>{{ user.profile.styremedlem|yesno:"✓," }}</td>
+                            <td>{{ user.profile.last_job_date }}</td> 
+                            <td>{{ user.profile.months_since_last_job }}</td>                
                           </tr>
                         {% endfor %}
                       </tbody>

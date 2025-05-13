@@ -75,10 +75,29 @@ def time_to_num(time_str):
     returnTime = hour + minutes
     return returnTime
 
+def days_to_months(days, avg_days_per_month=30.44):
+    return days / avg_days_per_month
+
+def get_most_recent_job_date(job):
+    job_date = job.submission.form_data['dato']
+    today = datetime.today().strftime("%Y-%m-%d")
+
+    d1 = datetime.strptime(job_date, "%Y-%m-%d")
+    d2 = datetime.strptime(today, "%Y-%m-%d")
+
+    delta_days = abs((d2 - d1).days)
+    months = int(days_to_months(delta_days))
+    
+    return (months, job_date)
+
 @login_required(redirect_field_name="next", login_url="/management/login/")
 def my_assigned_jobs(request):
 
     profile = get_object_or_404(Profile, user=request.user)
+    months_since_last_job = profile.months_since_last_job
+    last_job_date = profile.last_job_date
+
+    #Toggle job assignment
 
     if profile.kjønn == "K":
         my_assigned_jobs = Job.objects.select_related("submission").filter(assigned_to_F=profile).order_by("-submission__submit_time")
@@ -90,7 +109,6 @@ def my_assigned_jobs(request):
 
     if request.method == "POST":
 
-        #gets a list of all checklisted items and makes a list of them
         selected_jobs = request.POST.getlist('selected_jobs')
 
         jobs = Job.objects.filter(id__in=selected_jobs)
@@ -103,7 +121,8 @@ def my_assigned_jobs(request):
                 When(job_is_completed=False, then=Value(True)),
                 default=Value(False))
             )
-    
+
+            #Calculate duration of job and adjust user_work_time field in model    
             user_work_time = profile.timer
 
             for each_job in jobs:
@@ -114,7 +133,6 @@ def my_assigned_jobs(request):
                 end_dt = datetime.strptime(end_time, "%H:%M")
 
                 job_duration = end_dt - start_dt
-
                 int_job_duration = time_to_num(str(job_duration))
 
                 if not each_job.job_is_completed:
@@ -122,15 +140,36 @@ def my_assigned_jobs(request):
                 else:
                     user_work_time += int_job_duration
 
-            print(user_work_time)
+                    
 
-    
+            #Find most recent job
+
+            for each_job in jobs:
+                deltaDates = get_most_recent_job_date(each_job)
+                months = deltaDates[0]
+                if months_since_last_job is None: 
+                    months_since_last_job = deltaDates[0]
+                    last_job_date = deltaDates[1]
+                if months >= months_since_last_job:
+                    months_since_last_job = deltaDates[0]
+                    last_job_date = deltaDates[1]
+
+                if not each_job.job_is_completed:
+                    months_since_last_job = None 
+                    last_job_date = None
+
+
         profile.timer = user_work_time
-        profile.save(update_fields=["timer"])                 
+        profile.months_since_last_job = months_since_last_job
+        profile.last_job_date = last_job_date
+        profile.save(update_fields=["timer", "months_since_last_job", "last_job_date"])  
+
 
     return render(request, "management/my_assigned_jobs.html", {
             "my_assigned_jobs": my_assigned_jobs,
             "job_is_completed": job_is_completed,
+            "months_since_last_job": months_since_last_job,
+            "last_job_date": last_job_date,
         })
    
 def logout_view(request):
