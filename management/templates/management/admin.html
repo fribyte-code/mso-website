@@ -54,11 +54,11 @@
 
 {% block content %}
 
-    <form action="/admin/" method="get" target="_blank" style="display:inline;">
-        <button type="submit" class="profile-button">
-            Go to Admin Panel
-        </button>
-    </form>
+    
+    <button class="profile-button" onclick="window.location.href = '/admin/'">Go to Admin Panel</button>
+
+    <button class="btn" onclick="window.location.href = '/management/admin/create_new_user/'">Create new user</button>
+    
 
     <div>
         <h1>Users</h1>

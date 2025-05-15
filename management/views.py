@@ -3,7 +3,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 from .models import Profile, Job
-from .forms import ProfileForm, AdminProfileForm
+from .forms import ProfileForm, AdminProfileForm, CreateUser
 from django.contrib.auth.models import User, Group
 from django.contrib import messages 
 from django.db.models import Case, When, Value
@@ -183,7 +183,7 @@ def profile(request):
 
 @login_required(redirect_field_name="next", login_url="/management/login/")
 def profile_edit(request):
-    # ensure a Profile exists
+    
     profile, created = Profile.objects.get_or_create(user=request.user)
 
     if request.method == "POST":
@@ -263,7 +263,27 @@ def admin_profile_edit(request, pk):
         'profile': profile,
     })
 
+@staff_member_required(redirect_field_name="next", login_url="/management/login/")
+def create_new_user(request):
 
+    form = CreateUser(request.POST or None,
+                                request.FILES or None)
+
+    if request.method == 'POST':
+        username = request.POST.get("username")
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        password = request.POST.get("password")
+
+        user = User.objects.create(username=username, first_name=first_name, last_name=last_name, password=password)
+
+        user.save()
+
+        return redirect(f"/management/admin/profile_edit/{user.id}/")
+
+    return render(request, 'management/admin/create_new_user.html', {
+        'form':   form,
+    })
 
 
 
