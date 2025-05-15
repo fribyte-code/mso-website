@@ -2,15 +2,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
-from wagtail.contrib.forms.models import FormSubmission
-from home.models import FormPage
 from .models import Profile, Job
 from .forms import ProfileForm, AdminProfileForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib import messages 
-from django.db import models
-from django.db.models import Case, When, Value, BooleanField, F
-from datetime import datetime, timedelta
+from django.db.models import Case, When, Value
+from datetime import datetime
 
 @login_required(redirect_field_name="next", login_url="/management/login/")
 def index(request):
@@ -236,7 +233,7 @@ def admin(request):
 
 @staff_member_required(redirect_field_name="next", login_url="/management/login/")
 def admin_profile_edit(request, pk):
-    user    = get_object_or_404(User, pk=pk)
+    user: User = get_object_or_404(User, pk=pk)
     profile, created = Profile.objects.get_or_create(user=user)
 
     form = AdminProfileForm(request.POST or None,
@@ -246,11 +243,15 @@ def admin_profile_edit(request, pk):
     if request.method == 'POST' and form.is_valid():
         form.save()
 
-        # Flipping this gives access to more advanced views
+        # Flipping is_staff gives access to more advanced views
+        # adding group gives access to edit the pages in wagtail admin
+        grp = Group.objects.get(name="Moderators")
         if form.cleaned_data["styremedlem"]:
             user.is_staff = True
+            user.groups.add(grp)
         else:
             user.is_staff = False
+            user.groups.remove(grp)
 
         user.save()
 
