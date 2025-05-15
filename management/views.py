@@ -1,13 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import logout
+from django.contrib.auth import logout, update_session_auth_hash
 from .models import Profile, Job
 from .forms import ProfileForm, AdminProfileForm, CreateUser
 from django.contrib.auth.models import User, Group
 from django.contrib import messages 
 from django.db.models import Case, When, Value
 from datetime import datetime
+
 
 @login_required(redirect_field_name="next", login_url="/management/login/")
 def index(request):
@@ -184,12 +185,24 @@ def profile(request):
 @login_required(redirect_field_name="next", login_url="/management/login/")
 def profile_edit(request):
     
+    user=request.user
     profile, created = Profile.objects.get_or_create(user=request.user)
 
     if request.method == "POST":
         form = ProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
+
+            email = form.cleaned_data.get("email")
+            if email:
+                user.email = email
+
+            password = form.cleaned_data.get("password")
+            if password:
+                user.set_password(password)
+
+            user.save()
+
             return redirect("profile.html")   # back to your view-profile URL
     else:
         form = ProfileForm(instance=profile)
@@ -252,6 +265,18 @@ def admin_profile_edit(request, pk):
         else:
             user.is_staff = False
             user.groups.remove(grp)
+
+        email = form.cleaned_data.get("email")
+        if email:
+            user.email = email
+
+        password = form.cleaned_data.get("password")
+        if password:
+            user.set_password(password)
+
+            if request.user == user:
+                update_session_auth_hash(request, user)
+
 
         user.save()
 
