@@ -245,6 +245,15 @@ def admin_profile_edit(request, pk):
 
     if request.method == 'POST' and form.is_valid():
         form.save()
+
+        # Flipping this gives access to more advanced views
+        if form.cleaned_data["styremedlem"]:
+            user.is_staff = True
+        else:
+            user.is_staff = False
+
+        user.save()
+
         return redirect('/management/admin', pk=pk)
 
     return render(request, 'management/admin/profile_edit.html', {
