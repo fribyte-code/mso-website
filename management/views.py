@@ -245,7 +245,7 @@ def admin_profile_edit(request, pk):
 
     if request.method == 'POST' and form.is_valid():
         form.save()
-        return redirect('admin-profile-edit', pk=pk)
+        return redirect('/management/admin', pk=pk)
 
     return render(request, 'management/admin/profile_edit.html', {
         'form':   form,
