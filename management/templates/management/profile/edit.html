@@ -1,0 +1,30 @@
+{% extends "management-base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+    <style>
+      /* Make all text inputs and textareas red */
+      textarea{
+        max-height: 20px;
+      }
+      
+    </style>
+{% endblock extra_css %}
+
+{% block content %}
+    <h1>Edit your profile</h1>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn">Save changes</button>
+        </form>
+
+        <form action="{% url 'profile.html' %}" method="get" style="display:inline;">
+            <button type="submit" class="profile-button">
+                Return to profile
+            </button>
+        </form>
+{% endblock %}

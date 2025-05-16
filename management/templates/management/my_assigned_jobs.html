@@ -54,26 +54,14 @@
 {% endblock extra_css %}
 
 {% block content %}
-    <div>
-        <h1>All available jobs</h1>
-        <form method="post" action="{% url 'index' %}">
-            {% csrf_token %}
-            <button type="submit" name="action" value="assign" class="btn">Assign yourself to selected jobs</button>
-        
-            <button type="submit" name="action" value="unassign" class="btn">Unassign yourself to selected jobs</button>
-        
-            {% if messages %}
-              <div class="container mt-3">
-                {% for message in messages %}
-                  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                {% endfor %}
-              </div>
-            {% endif %}
 
-            {% if jobs %}
+    <div>
+        <h1>My completed jobs</h1>
+            <form method="post" action="{% url 'my_assigned_jobs' %}">
+            {% csrf_token %}
+            <button type="submit" name="action" value="job_is_completed" class="btn">Toggle marking job as completed</button>
+
+            {% if job_is_completed %}
                 <div class="table-wrapper">
                     <table class="jobs-table sortable">
                         <input
@@ -86,6 +74,7 @@
                             <tr>
                                 <th></th>
                                 <th>Submission Date</th>
+                                <th>Completed</th>
                                 <th>Assigned to (M)</th>
                                 <th>Assigned to (K)</th>
                                 <th>Navn på skole/organisasjon</th>
@@ -110,7 +99,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for job in jobs %}
+                            {% for job in job_is_completed %}
                                 <tr>
                                     <td class="check">
                                         <label>
@@ -118,6 +107,7 @@
                                         </label>
                                     </td>
                                     <td>{{ job.submission.submit_time|date:"F j, Y, g:i a" }}</td>
+                                    <td>{{ job.job_is_completed }}</td>
                                     <td>{{ job.assigned_to_M.user.get_full_name }}</td>
                                     <td>{{ job.assigned_to_F.user.get_full_name }}</td>
                                     <td>{{ job.submission.form_data.navn_pa_skoleorganisasjon }}</td>
@@ -146,7 +136,88 @@
                 </div>
             {% else %}
                 <div class="no-jobs">
-                    <p>No job submissions found.</p>
+                    <p>No completed jobs.</p>
+                </div>
+            {% endif %}
+       
+    </div>
+
+    <div>
+        <h1>My assigned jobs</h1>
+           
+            {% if my_assigned_jobs %}
+                <div class="table-wrapper">
+                    <table class="jobs-table sortable">
+                        
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Submission Date</th>
+                                <th>Completed</th>
+                                <th>Assigned to (M)</th>
+                                <th>Assigned to (K)</th>
+                                <th>Navn på skole/organisasjon</th>
+                                <th>Kontaktperson</th>
+                                <th>Telefon</th>
+                                <th>E-post</th>
+                                <th>Dato</th>
+                                <th>Start tid</th>
+                                <th>Slutt tid</th>
+                                <th>Gruppe type</th>
+                                <th>Antall grupper</th>
+                                <th>Gruppestørrelser</th>
+                                <th>Kjønnsfordeling</th>
+                                <th>Alder/Klassetrinn</th>
+                                <th>Har MSO undervist her før?</th>
+                                <th>Tilleggsinformasjon</th>
+                                <th>Besøksadresse</th>
+                                <th>Navn på fakturamottaker</th>
+                                <th>Fakturaadresse</th>
+                                <th>Organisasjonsnummer til fakturamottaker</th>
+                                <th>Referanse</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for job in my_assigned_jobs %}
+                                {% if not job.job_is_completed %}
+                                    <tr>
+                                        <td class="check">
+                                            <label>
+                                                <input type="checkbox" name="selected_jobs" value="{{ job.id }}" />
+                                            </label>
+                                        </td>
+                                        <td>{{ job.submission.submit_time|date:"F j, Y, g:i a" }}</td>
+                                        <td>{{ job.job_is_completed }}</td>
+                                        <td>{{ job.assigned_to_M.user.get_full_name }}</td>
+                                        <td>{{ job.assigned_to_F.user.get_full_name }}</td>
+                                        <td>{{ job.submission.form_data.navn_pa_skoleorganisasjon }}</td>
+                                        <td>{{ job.submission.form_data.kontaktperson }}</td>
+                                        <td>{{ job.submission.form_data.telefon }}</td>
+                                        <td>{{ job.submission.form_data.epost }}</td>
+                                        <td>{{ job.submission.form_data.dato }}</td>
+                                        <td>{{ job.submission.form_data.start_tid }}</td>
+                                        <td>{{ job.submission.form_data.slutt_tid }}</td>
+                                        <td>{{ job.submission.form_data.gruppe_type }}</td>
+                                        <td>{{ job.submission.form_data.antall_grupper }}</td>
+                                        <td>{{ job.submission.form_data.gruppestxf8rrelser }}</td>
+                                        <td>{{ job.submission.form_data.kjxf8nnsfordeling }}</td>
+                                        <td>{{ job.submission.form_data.alderklassetrinn }}</td>
+                                        <td>{{ job.submission.form_data.har_mso_undervist_her_fxf8r }}</td>
+                                        <td>{{ job.submission.form_data.tilleggsinformasjon }}</td>
+                                        <td>{{ job.submission.form_data.besxf8ksadresse_gjerne_med_veibeskrivelse_fra_bergen_sentrum }}</td>
+                                        <td>{{ job.submission.form_data.navn_pa_fakturamottaker }}</td>
+                                        <td>{{ job.submission.form_data.fakturaadresse }}</td>
+                                        <td>{{ job.submission.form_data.organisasjonsnummer_til_fakturamottaker }}</td>
+                                        <td>{{ job.submission.form_data.referanse_feks_ressursnr_om_faktura_skal_til_fylkekommune }}</td>                                
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="no-jobs">
+                    <p>No jobs assigned to you.</p>
                 </div>
             {% endif %}
         </form>

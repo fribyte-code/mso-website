@@ -1,0 +1,40 @@
+{% extends "management-base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block extra_css %}
+    <style>
+     
+    </style>
+{% endblock extra_css %}
+
+{% block content %}
+    <div>
+        <h1>USER PROFILE PAGE</h1>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Fullname:</strong> {{ user.get_full_name }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Telefon:</strong> {{ profile.telefon|default:"–" }}</p>
+        <p><strong>Kjønn:</strong> {{ profile.kjønn|default:"–" }}</p>
+        <p><strong>Kull:</strong> {{ profile.kull|default:"–" }}</p>
+        <p><strong>Erfaren:</strong> {{ profile.erfaren }}</p>
+        <p><strong>PU Erfaren:</strong> {{ profile.pu_erfaren }}</p>
+        <p><strong>FUS Erfaren:</strong> {{ profile.fus_erfaren }}</p>
+        <p><strong>Timer:</strong> {{ profile.timer }}</p>
+        <p><strong>Internundervisning:</strong> {{ profile.internundervisning }}</p>
+        <p><strong>Styremedlem:</strong> {{ profile.styremedlem }}</p>
+        <p><strong>Siste oppdrag:</strong> {{ profile.last_job_date }}</p>
+        
+        <form action="{% url 'profile_edit.html' %}" method="get" style="display:inline;">
+            <button type="submit" class="edit-profile-button">
+                Edit my profile
+            </button>
+        </form>
+
+    </div>
+
+{% block extra_js %}
+    
+{% endblock extra_js%}
+
+{% endblock %}
+
