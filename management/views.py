@@ -99,11 +99,11 @@ def my_assigned_jobs(request):
 
     if profile.kjønn == "K":
         my_assigned_jobs = Job.objects.select_related("submission").filter(assigned_to_F=profile).order_by("-submission__submit_time")
+        job_is_completed = Job.objects.select_related("submission").filter(job_is_completed=True, assigned_to_F=profile).order_by("-submission__submit_time")
         
     else:
         my_assigned_jobs = Job.objects.select_related("submission").filter(assigned_to_M=profile).order_by("-submission__submit_time")
-
-    job_is_completed = Job.objects.select_related("submission").filter(job_is_completed=True).order_by("-submission__submit_time")
+        job_is_completed = Job.objects.select_related("submission").filter(job_is_completed=True, assigned_to_M=profile).order_by("-submission__submit_time")
 
     if request.method == "POST":
 
