@@ -1,0 +1,46 @@
+1. 
+    Profile
+    - Create user as a Sytremedlem
+    - Log in as that user
+    - Edit profile data as user
+    - Change password
+    - Change email
+    - Log out and log in
+    - Confirm changes
+
+    Jobs
+    - Add self to an available job
+    - View job in my assigned jobs panel
+    - Register job as completed
+    - Check that the hours are correct
+    - Check that the last job date is correct
+    - Unassign self from job and check that the info in profile page has reverted
+    - Reassign yourself from the job and mark the job completed
+
+    Sytremedlem
+    - As a sytremedlem, grant the test user sytremedlem status in admin panel
+    - Log in as test user
+    - Confirm Admin and Requested jobs panels are visible
+    - Send in job request from public facing site
+    - Confirm that the job is visible in requested jobs
+    - Confirm that completed and requested jobs are separated and visible
+    - Confirm that the activated field is False (meaning this job is inactivated)
+    - Confirm that the inactivated job is not visible in the job sign up panel
+    - Toggle activation of jobs to confirm
+    - Confirm any job with an available slot and activate it 
+    - Go to job signup and assign yourself to that job
+    - Mark the job as completed in my assigned jobs panel 
+    - Deactivate job in requested jobs panel
+    - Confirm that the job is no longer visible in job signup
+    - Confirm that the job is visible in completed jobs section of requested jobs 
+    - Create a new user in admin panel and log in as that user (not styremedlem)
+    - Confirm that the visible data is correct as a user
+    - Login as styremedlem again and make the inactive job active again 
+    - Login as non styremedlem and confirm that the now activated job is visible 
+    - Sign up to the now visible job
+    - Confirm that the job is visible in my assigned jobs and mark it as completed 
+    - Log out and log back in as styremedlem
+    - Confirm that the user is added to the job and the job is marked as completed 
+    - The admin is unable to edit completed job field
+
+
