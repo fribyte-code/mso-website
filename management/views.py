@@ -294,16 +294,14 @@ def create_new_user(request):
     form = CreateUser(request.POST or None,
                                 request.FILES or None)
 
-    if request.method == 'POST':
-        username = request.POST.get("username")
-        first_name = request.POST.get("first_name")
-        last_name = request.POST.get("last_name")
-        password = request.POST.get("password")
-
-        user = User.objects.create(username=username, first_name=first_name, last_name=last_name, password=password)
-
-        user.save()
-
+    if request.method == 'POST' and form.is_valid():
+        user = User.objects.create_user(
+            username = form.cleaned_data.get("username"),
+            first_name = form.cleaned_data.get("first_name"),
+            last_name = form.cleaned_data.get("last_name"),
+            email = form.cleaned_data.get("email"),
+            password = form.cleaned_data.get("password"),
+        )
         return redirect(f"/management/admin/profile_edit/{user.id}/")
 
     return render(request, 'management/admin/create_new_user.html', {
